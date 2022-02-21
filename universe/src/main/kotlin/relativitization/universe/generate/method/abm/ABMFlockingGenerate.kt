@@ -3,10 +3,9 @@ package relativitization.universe.generate.method.abm
 import relativitization.universe.ai.ABMFlockingAI
 import relativitization.universe.ai.name
 import relativitization.universe.data.*
+import relativitization.universe.data.components.MutableABMFlockingData
+import relativitization.universe.data.components.MutablePlayerDataComponentMap
 import relativitization.universe.maths.physics.MutableVelocity
-import relativitization.universe.data.components.physicsData
-import relativitization.universe.data.components.popSystemData
-import relativitization.universe.data.components.syncData
 import relativitization.universe.data.global.UniverseGlobalData
 import relativitization.universe.data.serializer.DataSerializer
 import relativitization.universe.generate.method.GenerateSettings
@@ -28,27 +27,36 @@ object ABMFlockingGenerate : ABMGenerateUniverseMethod() {
 
         val universeState = UniverseState(
             currentTime = universeSettings.tDim - 1,
-            maxPlayerId = settings.numPlayer,
+            maxPlayerId = 0,
         )
 
         for (i in 1..settings.numPlayer) {
-            val playerData = MutablePlayerData(playerId = i)
+            val playerId: Int = universeState.getNewPlayerId()
 
-            // Set human player for small i
-            if (i <= settings.numHumanPlayer) {
-                playerData.playerType = PlayerType.HUMAN
-            }
+            val mutablePlayerDataComponentMap = MutablePlayerDataComponentMap()
 
-            playerData.int4D.x = Rand.rand().nextInt(0, universeSettings.xDim)
-            playerData.int4D.y = Rand.rand().nextInt(0, universeSettings.yDim)
-            playerData.int4D.z = Rand.rand().nextInt(0, universeSettings.zDim)
-
-            playerData.playerInternalData.popSystemData().addSpaceShip(
-                1.0, 1E5, 1E6
+            mutablePlayerDataComponentMap.put(
+                MutableABMFlockingData(
+                    mass = 1.0,
+                    fuelRestMass = 100.0
+                )
             )
 
-            // Add fuel rest mass
-            playerData.playerInternalData.physicsData().fuelRestMassData.movement = 1E6
+            val mutablePlayerInternalData = MutablePlayerInternalData(
+                directLeaderId = playerId,
+                playerDataComponentMap = mutablePlayerDataComponentMap
+            )
+
+            val mutablePlayerData = MutablePlayerData(
+                playerId = playerId,
+                playerInternalData = mutablePlayerInternalData
+            )
+
+            mutablePlayerData.playerType = PlayerType.AI
+
+            mutablePlayerData.int4D.x = Rand.rand().nextInt(0, universeSettings.xDim)
+            mutablePlayerData.int4D.y = Rand.rand().nextInt(0, universeSettings.yDim)
+            mutablePlayerData.int4D.z = Rand.rand().nextInt(0, universeSettings.zDim)
 
 
             val vx = Rand.rand().nextDouble(-1.0, 1.0)
@@ -56,14 +64,13 @@ object ABMFlockingGenerate : ABMGenerateUniverseMethod() {
             val vz = Rand.rand().nextDouble(-1.0, 1.0)
 
             // Constant velocity 0.5
-            playerData.velocity = MutableVelocity(vx, vy, vz).scaleVelocity(0.5)
+            mutablePlayerData.velocity = MutableVelocity(vx, vy, vz).scaleVelocity(0.5)
 
             // Use flocking ai
-            playerData.playerInternalData.aiName = ABMFlockingAI.name()
+            mutablePlayerData.playerInternalData.aiName = ABMFlockingAI.name()
 
-            playerData.syncData()
             data.addPlayerDataToLatestWithAfterImage(
-                playerData,
+                mutablePlayerData,
                 universeState.getCurrentTime(),
                 universeSettings.groupEdgeLength,
                 universeSettings.playerAfterImageDuration
