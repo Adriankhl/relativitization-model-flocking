@@ -23,14 +23,9 @@ fun main() {
             mechanismCollectionName = ABMFlockingMechanismLists.name(),
             globalMechanismCollectionName = EmptyGlobalMechanismList.name(),
             speedOfLight = 1.0,
-            tDim = 16,
             xDim = 10,
             yDim = 10,
             zDim = 3,
-            playerAfterImageDuration = 4,
-            playerHistoricalInt4DLength = 4,
-            groupEdgeLength = 0.01,
-            otherSettings = mutableMapOf(),
         )
     )
 
