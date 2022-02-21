@@ -1,10 +1,12 @@
 package relativitization.universe.data.components
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import relativitization.universe.data.MutablePlayerInternalData
 import relativitization.universe.data.PlayerInternalData
 
 @Serializable
+@SerialName("ABMFlockingData")
 data class ABMFlockingData(
     val coreMass: Double = 1.0,
     val fuelRestMass: Double = 0.0,
@@ -13,6 +15,7 @@ data class ABMFlockingData(
 }
 
 @Serializable
+@SerialName("ABMFlockingData")
 data class MutableABMFlockingData(
     var coreMass: Double = 1.0,
     var fuelRestMass: Double = 0.0,

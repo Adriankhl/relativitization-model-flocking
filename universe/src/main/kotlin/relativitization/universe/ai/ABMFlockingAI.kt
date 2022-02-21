@@ -2,7 +2,7 @@ package relativitization.universe.ai
 
 import relativitization.universe.data.PlayerData
 import relativitization.universe.data.UniverseData3DAtPlayer
-import relativitization.universe.data.commands.ChangeVelocityCommand
+import relativitization.universe.data.commands.ABMFlockingChangeVelocityCommand
 import relativitization.universe.data.commands.Command
 import relativitization.universe.maths.physics.Double3D
 import relativitization.universe.maths.physics.Velocity
@@ -43,14 +43,14 @@ object ABMFlockingAI : AI() {
 
         val weightedVelocity = originalVelocity * ratio + targetVelocity * ratio
 
-        val changeVelocityCommand = ChangeVelocityCommand(
+        val abmFlockingChangeVelocityCommand = ABMFlockingChangeVelocityCommand(
             toId = universeData3DAtPlayer.id,
             fromId = universeData3DAtPlayer.id,
             fromInt4D = universeData3DAtPlayer.getCurrentPlayerData().int4D,
             targetVelocity = weightedVelocity,
         )
 
-        return listOf(changeVelocityCommand)
+        return listOf(abmFlockingChangeVelocityCommand)
     }
 
     private fun cohesion(universeData3DAtPlayer: UniverseData3DAtPlayer, radius: Double): Double3D {
