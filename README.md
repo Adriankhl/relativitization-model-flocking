@@ -15,3 +15,8 @@ Copy all essential files from Relativitization:
 ```
 cp -r ../relativitization/{buildSrc,universe,simulations,*kts,gradle*} .
 ```
+
+Run:
+```
+./gradlew :simulations:run -PmainClass=relativitization.abm.FlockingWithFuelProductionKt
+```
