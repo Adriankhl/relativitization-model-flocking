@@ -37,7 +37,7 @@ object ABMFlockingGenerate : ABMGenerateUniverseMethod() {
 
             mutablePlayerDataComponentMap.put(
                 MutableABMFlockingData(
-                    mass = 1.0,
+                    coreMass = 1.0,
                     fuelRestMass = 100.0
                 )
             )
