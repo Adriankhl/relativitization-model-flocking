@@ -13,10 +13,10 @@ object ABMFlockingSVMAI : AI() {
 
     override fun compute(universeData3DAtPlayer: UniverseData3DAtPlayer): List<Command> {
 
-        val flockVelocity: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap.getOrElse(
-            "flockVelocity"
+        val flockSpeed: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap.getOrElse(
+            "flockSpeed"
         ) {
-            logger.error("No flockVelocity defined")
+            logger.error("No flockSpeed defined")
             0.5
         }
 
@@ -48,7 +48,7 @@ object ABMFlockingSVMAI : AI() {
             Velocity(0.0, 0.0, 0.0)
         ) { acc, playerData ->
            acc + playerData.velocity
-        }.scaleVelocity(flockVelocity)
+        }.scaleVelocity(flockSpeed)
 
         val newPerturbedVelocity: Velocity = newVelocity.randomRotate(maxAnglePerturbation)
 

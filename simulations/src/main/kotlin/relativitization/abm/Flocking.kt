@@ -12,10 +12,14 @@ import relativitization.universe.generate.method.abm.ABMFlockingGenerate
 import relativitization.universe.generate.method.name
 import relativitization.universe.global.EmptyGlobalMechanismList
 import relativitization.universe.global.name
+import relativitization.universe.maths.physics.Velocity
 import relativitization.universe.mechanisms.ABMFlockingMechanismLists
 import relativitization.universe.mechanisms.name
+import kotlin.math.PI
 
 fun main() {
+    val flockSpeed: Double = 0.5
+    val maxAnglePerturbation: Double = 0.5
     val generateSetting = GenerateSettings(
         generateMethod = ABMFlockingGenerate.name(),
         numPlayer = 50,
@@ -36,11 +40,11 @@ fun main() {
             speedOfLight = 1.0,
             xDim = 10,
             yDim = 10,
-            zDim = 3,
+            zDim = 10,
             otherDoubleMap = mutableMapOf(
                 "nearByRadius" to 3.0,
-                "maxAnglePerturbation" to 0.1,
-                "flockVelocity" to 0.5,
+                "maxAnglePerturbation" to maxAnglePerturbation,
+                "flockSpeed" to flockSpeed,
             ),
         )
     )
@@ -48,7 +52,21 @@ fun main() {
     val universe = Universe(GenerateUniverseMethodCollection.generate(generateSetting), ".")
 
     for (turn in 1..1000) {
-        println("Turn: $turn")
+        val orderParameter: Double = computeOrderParameter(
+            universe.getCurrentPlayerDataList().map { it.velocity },
+            flockSpeed,
+        )
+
+        println("Turn: $turn. Order parameter: $orderParameter ")
+
         universe.pureAIStep()
     }
+}
+
+private fun computeOrderParameter(velocityList: List<Velocity>, flockSpeed: Double): Double {
+    val totalVelocity: Velocity = velocityList.fold(Velocity(0.0, 0.0, 0.0)) { acc, velocity ->
+        acc + velocity
+    }
+
+    return totalVelocity.mag() / flockSpeed / velocityList.size
 }
