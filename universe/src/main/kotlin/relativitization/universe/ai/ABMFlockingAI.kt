@@ -16,10 +16,30 @@ object ABMFlockingAI : AI() {
     override fun compute(universeData3DAtPlayer: UniverseData3DAtPlayer): List<Command> {
         logger.debug("Computing with FlockingAI")
 
-        val nearByRadius = 2.0
-        val desiredSeparation = 0.5
-        val velocityMag = 0.5
-        val ratio = 0.8
+        val nearByRadius: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap.getOrElse(
+            "nearByRadius"
+        ) {
+            logger.error("No nearByRadius defined")
+            2.0
+        }
+        val desiredSeparation: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap.getOrElse(
+            "desiredSeparation"
+        ) {
+            logger.error("No desiredSeparation defined")
+            0.5
+        }
+        val velocityMag: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap.getOrElse(
+            "velocityMag"
+        ) {
+            logger.error("No velocityMag defined")
+            0.5
+        }
+        val ratio: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap.getOrElse(
+            "ratio",
+        ) {
+            logger.error("No velocityMag defined")
+            0.8
+        }
 
         val cohesionDouble3D = cohesion(universeData3DAtPlayer, nearByRadius)
 
