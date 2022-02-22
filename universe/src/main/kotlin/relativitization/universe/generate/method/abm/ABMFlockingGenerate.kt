@@ -11,10 +11,28 @@ import relativitization.universe.data.serializer.DataSerializer
 import relativitization.universe.generate.method.GenerateSettings
 import relativitization.universe.maths.grid.Grids.create4DGrid
 import relativitization.universe.maths.random.Rand
+import relativitization.universe.utils.RelativitizationLogManager
 
 object ABMFlockingGenerate : ABMGenerateUniverseMethod() {
+    private val logger = RelativitizationLogManager.getLogger()
+
     override fun generate(settings: GenerateSettings): UniverseData {
         val universeSettings: UniverseSettings = DataSerializer.copy(settings.universeSettings)
+
+        val coreRestMass: Double = settings.otherDoubleMap.getOrElse("coreRestMass") {
+            logger.error("No coreRestMass defined")
+            1.0
+        }
+
+        val initialFuelRestMass: Double = settings.otherDoubleMap.getOrElse("initialFuelRestMass") {
+            logger.error("No initialFuelRestMass defined")
+            1.0
+        }
+
+        val aiName: String = settings.otherStringMap.getOrElse("aiName") {
+            logger.error("No aiName defined")
+            ABMFlockingAI.name()
+        }
 
         val data = MutableUniverseData4D(
             create4DGrid(
@@ -33,23 +51,13 @@ object ABMFlockingGenerate : ABMGenerateUniverseMethod() {
         for (i in 1..settings.numPlayer) {
             val playerId: Int = universeState.getNewPlayerId()
 
-            val mutablePlayerDataComponentMap = MutablePlayerDataComponentMap()
+            val mutablePlayerData = MutablePlayerData(playerId)
 
-            mutablePlayerDataComponentMap.put(
+            mutablePlayerData.playerInternalData.playerDataComponentMap.put(
                 MutableABMFlockingData(
-                    coreMass = 1.0,
-                    fuelRestMass = 100.0
+                    coreRestMass = coreRestMass,
+                    fuelRestMass = initialFuelRestMass,
                 )
-            )
-
-            val mutablePlayerInternalData = MutablePlayerInternalData(
-                directLeaderId = playerId,
-                playerDataComponentMap = mutablePlayerDataComponentMap
-            )
-
-            val mutablePlayerData = MutablePlayerData(
-                playerId = playerId,
-                playerInternalData = mutablePlayerInternalData
             )
 
             mutablePlayerData.playerType = PlayerType.AI
@@ -66,8 +74,8 @@ object ABMFlockingGenerate : ABMGenerateUniverseMethod() {
             // Constant velocity 0.5
             mutablePlayerData.velocity = MutableVelocity(vx, vy, vz).scaleVelocity(0.5)
 
-            // Use flocking ai
-            mutablePlayerData.playerInternalData.aiName = ABMFlockingAI.name()
+            // Choose AI
+            mutablePlayerData.playerInternalData.aiName = aiName
 
             data.addPlayerDataToLatestWithAfterImage(
                 mutablePlayerData,

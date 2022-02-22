@@ -1,6 +1,8 @@
 package relativitization.abm
 
 import relativitization.universe.Universe
+import relativitization.universe.ai.ABMFlockingSVMAI
+import relativitization.universe.ai.name
 import relativitization.universe.data.MutableUniverseSettings
 import relativitization.universe.data.commands.AllCommandAvailability
 import relativitization.universe.data.commands.name
@@ -17,6 +19,15 @@ fun main() {
     val generateSetting = GenerateSettings(
         generateMethod = ABMFlockingGenerate.name(),
         numPlayer = 50,
+        numHumanPlayer = 0,
+        otherIntMap = mutableMapOf(),
+        otherDoubleMap = mutableMapOf(
+            "coreRestMass" to 1.0,
+            "initialFuelRestMass" to 100.0,
+        ),
+        otherStringMap = mutableMapOf(
+            "aiName" to ABMFlockingSVMAI.name(),
+        ),
         universeSettings = MutableUniverseSettings(
             universeName = "Flocking",
             commandCollectionName = AllCommandAvailability.name(),
