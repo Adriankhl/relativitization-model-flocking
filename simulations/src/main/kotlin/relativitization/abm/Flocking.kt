@@ -22,8 +22,8 @@ fun main() {
         numHumanPlayer = 0,
         otherIntMap = mutableMapOf(),
         otherDoubleMap = mutableMapOf(
-            "coreRestMass" to 1.0,
-            "initialFuelRestMass" to 100.0,
+            "coreRestMass" to 0.0,
+            "initialFuelRestMass" to 1.0,
         ),
         otherStringMap = mutableMapOf(
             "aiName" to ABMFlockingSVMAI.name(),
@@ -37,6 +37,11 @@ fun main() {
             xDim = 10,
             yDim = 10,
             zDim = 3,
+            otherDoubleMap = mutableMapOf(
+                "nearByRadius" to 3.0,
+                "maxAnglePerturbation" to 0.1,
+                "flockVelocity" to 0.5,
+            ),
         )
     )
 
