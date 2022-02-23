@@ -5,6 +5,7 @@ import org.jetbrains.kotlinx.dataframe.api.dataFrameOf
 import org.jetbrains.kotlinx.dataframe.api.describe
 import org.jetbrains.kotlinx.dataframe.api.drop
 import org.jetbrains.kotlinx.dataframe.io.writeCSV
+import relativitization.universe.maths.number.Notation
 import relativitization.universe.maths.random.Rand
 import java.io.File
 
@@ -28,10 +29,10 @@ fun main() {
     var df = initDf
 
     // range of speed of light
-    val speedOfLightList: List<Double> = (0..8).map { 0.6 + 0.2 * it }
+    val speedOfLightList: List<Double> = (0..7).map { Notation.roundDecimal(0.6 + 0.2 * it, 1) }
 
     // in radian
-    val maxAnglePerturbationList: List<Double> = (0..15).map { 0.1 + 0.2 * it }
+    val maxAnglePerturbationList: List<Double> = (0..15).map { Notation.roundDecimal(0.1 + 0.2 * it, 1) }
 
     for (speedOfLight in speedOfLightList) {
         for (maxAnglePerturbation in maxAnglePerturbationList) {
