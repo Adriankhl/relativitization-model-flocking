@@ -39,7 +39,7 @@ fun main() {
             df = df.concat(
                 singleFlockingWithSupplyRun(
                     nearByRadius = 3.0,
-                    flockSpeed = 0.5,
+                    flockSpeed = 0.3,
                     maxAnglePerturbation = maxAnglePerturbation,
                     speedOfLight = speedOfLight,
                     numStep = 1000,
