@@ -28,12 +28,14 @@ fun main() {
 
     val initDf = dataFrameOf(
         "Step",
+        "speedOfLight",
         "flockSpeed",
         "maxAnglePerturbation",
         "orderParameter",
         "totalRestMass",
     )(
         -1,
+        1.0,
         0.5,
         0.5,
         0.0,
@@ -112,7 +114,7 @@ internal fun singleFlockingWithSupplyRun(
             it.playerInternalData.abmFlockingData().restMass
         }
 
-        df = df.append(turn, flockSpeed, maxAnglePerturbation, orderParameter, totalRestMass)
+        df = df.append(turn, speedOfLight, flockSpeed, maxAnglePerturbation, orderParameter, totalRestMass)
 
         if (printStep) {
             println("Turn: $turn. Order parameter: $orderParameter. Total rest mass: $totalRestMass. ")

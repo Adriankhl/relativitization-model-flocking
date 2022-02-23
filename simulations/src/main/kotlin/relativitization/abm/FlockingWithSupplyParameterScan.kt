@@ -14,12 +14,14 @@ fun main() {
 
     val initDf = dataFrameOf(
         "Step",
+        "speedOfLight",
         "flockSpeed",
         "maxAnglePerturbation",
         "orderParameter",
         "totalRestMass",
     )(
         -1,
+        1.0,
         0.5,
         0.5,
         0.0,
