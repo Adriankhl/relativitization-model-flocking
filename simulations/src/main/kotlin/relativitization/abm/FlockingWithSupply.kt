@@ -7,8 +7,10 @@ import relativitization.universe.Universe
 import relativitization.universe.ai.ABMFlockingSVMAI
 import relativitization.universe.ai.name
 import relativitization.universe.data.MutableUniverseSettings
+import relativitization.universe.data.PlayerData
 import relativitization.universe.data.commands.AllCommandAvailability
 import relativitization.universe.data.commands.name
+import relativitization.universe.data.components.abmFlockingData
 import relativitization.universe.generate.method.GenerateSettings
 import relativitization.universe.generate.method.GenerateUniverseMethodCollection
 import relativitization.universe.generate.method.abm.ABMFlockingGenerate
@@ -24,11 +26,18 @@ import java.io.File
 fun main() {
     Rand.setSeed(100L)
 
-    val initDf = dataFrameOf("Step", "flockSpeed", "maxAnglePerturbation", "orderParameter")(
+    val initDf = dataFrameOf(
+        "Step",
+        "flockSpeed",
+        "maxAnglePerturbation",
+        "orderParameter",
+        "totalRestMass",
+    )(
         -1,
         0.5,
         0.5,
-        0.0
+        0.0,
+        0.0,
     ).drop(1)
 
     var df = initDf
@@ -93,15 +102,20 @@ internal fun singleFlockingWithSupplyRun(
     val universe = Universe(GenerateUniverseMethodCollection.generate(generateSetting))
 
     for (turn in 1..numStep) {
+        val currentPlayerDataList: List<PlayerData> = universe.getCurrentPlayerDataList()
         val orderParameter: Double = computeOrderParameter(
-            universe.getCurrentPlayerDataList().map { it.velocity },
+            currentPlayerDataList.map { it.velocity },
             flockSpeed,
         )
 
-        df = df.append(turn, flockSpeed, maxAnglePerturbation, orderParameter)
+        val totalRestMass: Double = currentPlayerDataList.sumOf {
+            it.playerInternalData.abmFlockingData().restMass
+        }
+
+        df = df.append(turn, flockSpeed, maxAnglePerturbation, orderParameter, totalRestMass)
 
         if (printStep) {
-            println("Turn: $turn. Order parameter: $orderParameter ")
+            println("Turn: $turn. Order parameter: $orderParameter. Total rest mass: $totalRestMass. ")
         }
 
         universe.pureAIStep()
