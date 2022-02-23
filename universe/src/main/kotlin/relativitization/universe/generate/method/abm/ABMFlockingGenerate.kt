@@ -1,6 +1,7 @@
 package relativitization.universe.generate.method.abm
 
 import relativitization.universe.ai.ABMFlockingAI
+import relativitization.universe.ai.ABMFlockingSVMAI
 import relativitization.universe.ai.name
 import relativitization.universe.data.*
 import relativitization.universe.data.components.MutableABMFlockingData
@@ -26,6 +27,13 @@ object ABMFlockingGenerate : ABMGenerateUniverseMethod() {
         val aiName: String = settings.otherStringMap.getOrElse("aiName") {
             logger.error("No aiName defined")
             ABMFlockingAI.name()
+        }
+
+        val flockSpeed: Double = settings.universeSettings.otherDoubleMap.getOrElse(
+            "flockSpeed"
+        ) {
+            logger.error("No flockSpeed defined")
+            0.5
         }
 
         val data = MutableUniverseData4D(
@@ -65,7 +73,7 @@ object ABMFlockingGenerate : ABMGenerateUniverseMethod() {
             val vz = Rand.rand().nextDouble(-1.0, 1.0)
 
             // Constant velocity 0.5
-            mutablePlayerData.velocity = MutableVelocity(vx, vy, vz).scaleVelocity(0.5)
+            mutablePlayerData.velocity = MutableVelocity(vx, vy, vz).scaleVelocity(flockSpeed)
 
             // Choose AI
             mutablePlayerData.playerInternalData.aiName = aiName
