@@ -8,20 +8,14 @@ import relativitization.universe.data.PlayerInternalData
 @Serializable
 @SerialName("ABMFlockingData")
 data class ABMFlockingData(
-    val coreRestMass: Double = 1.0,
-    val fuelRestMass: Double = 0.0,
-) : PlayerDataComponent() {
-    fun totalMass(): Double = coreRestMass + fuelRestMass
-}
+    val restMass: Double = 1.0,
+) : PlayerDataComponent()
 
 @Serializable
 @SerialName("ABMFlockingData")
 data class MutableABMFlockingData(
-    var coreRestMass: Double = 1.0,
-    var fuelRestMass: Double = 0.0,
-) : MutablePlayerDataComponent() {
-    fun totalMass(): Double = coreRestMass + fuelRestMass
-}
+    var restMass: Double = 1.0,
+) : MutablePlayerDataComponent()
 
 
 fun PlayerInternalData.abmFlockingData(): ABMFlockingData =

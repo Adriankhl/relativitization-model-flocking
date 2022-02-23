@@ -4,7 +4,6 @@ import relativitization.universe.ai.ABMFlockingAI
 import relativitization.universe.ai.name
 import relativitization.universe.data.*
 import relativitization.universe.data.components.MutableABMFlockingData
-import relativitization.universe.data.components.MutablePlayerDataComponentMap
 import relativitization.universe.maths.physics.MutableVelocity
 import relativitization.universe.data.global.UniverseGlobalData
 import relativitization.universe.data.serializer.DataSerializer
@@ -19,13 +18,8 @@ object ABMFlockingGenerate : ABMGenerateUniverseMethod() {
     override fun generate(settings: GenerateSettings): UniverseData {
         val universeSettings: UniverseSettings = DataSerializer.copy(settings.universeSettings)
 
-        val coreRestMass: Double = settings.otherDoubleMap.getOrElse("coreRestMass") {
-            logger.error("No coreRestMass defined")
-            1.0
-        }
-
-        val initialFuelRestMass: Double = settings.otherDoubleMap.getOrElse("initialFuelRestMass") {
-            logger.error("No initialFuelRestMass defined")
+        val initialRestMass: Double = settings.otherDoubleMap.getOrElse("initialRestMass") {
+            logger.error("No initialRestMass defined")
             1.0
         }
 
@@ -55,8 +49,7 @@ object ABMFlockingGenerate : ABMGenerateUniverseMethod() {
 
             mutablePlayerData.playerInternalData.playerDataComponentMap.put(
                 MutableABMFlockingData(
-                    coreRestMass = coreRestMass,
-                    fuelRestMass = initialFuelRestMass,
+                    restMass = initialRestMass,
                 )
             )
 

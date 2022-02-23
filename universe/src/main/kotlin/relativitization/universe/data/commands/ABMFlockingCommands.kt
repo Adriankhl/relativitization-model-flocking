@@ -20,7 +20,7 @@ data class ABMFlockingChangeVelocityCommand(
 
         val targetVelocityData: TargetVelocityData = Relativistic.targetVelocityByPhotonRocket(
             initialRestMass = playerData.playerInternalData.abmFlockingData().totalMass(),
-            maxDeltaRestMass = playerData.playerInternalData.abmFlockingData().fuelRestMass,
+            maxDeltaRestMass = playerData.playerInternalData.abmFlockingData().restMass,
             initialVelocity = playerData.velocity.toVelocity(),
             targetVelocity = targetVelocity,
             speedOfLight = universeSettings.speedOfLight
@@ -30,6 +30,6 @@ data class ABMFlockingChangeVelocityCommand(
         playerData.velocity.vy = targetVelocityData.newVelocity.vy
         playerData.velocity.vz = targetVelocityData.newVelocity.vz
 
-        playerData.playerInternalData.abmFlockingData().fuelRestMass -= targetVelocityData.deltaRestMass
+        playerData.playerInternalData.abmFlockingData().restMass -= targetVelocityData.deltaRestMass
     }
 }

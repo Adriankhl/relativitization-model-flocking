@@ -28,46 +28,36 @@ object ABMFlockingAI : AI() {
             logger.error("No desiredSeparation defined")
             0.5
         }
-        val velocityMag: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap.getOrElse(
-            "velocityMag"
+        val flockSpeed: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap.getOrElse(
+            "flockSpeed"
         ) {
-            logger.error("No velocityMag defined")
+            logger.error("No flockSpeed defined")
             0.5
-        }
-        val ratio: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap.getOrElse(
-            "ratio",
-        ) {
-            logger.error("No velocityMag defined")
-            0.8
         }
 
         val cohesionDouble3D = cohesion(universeData3DAtPlayer, nearByRadius)
 
-        val alignmentDouble3D = alignment(universeData3DAtPlayer, nearByRadius)
+        val alignmentDouble3D: Double3D = alignment(universeData3DAtPlayer, nearByRadius)
 
-        val separationDouble3D = separation(universeData3DAtPlayer, desiredSeparation)
+        val separationDouble3D: Double3D = separation(universeData3DAtPlayer, desiredSeparation)
 
-        val avoidBoundaryDouble3D = avoidBoundary(universeData3DAtPlayer)
+        val avoidBoundaryDouble3D: Double3D = avoidBoundary(universeData3DAtPlayer)
 
         val weightedDouble3D =
             cohesionDouble3D * 1.0 + alignmentDouble3D * 1.0 + separationDouble3D * 2.0 + avoidBoundaryDouble3D * 10.0
-
-        val originalVelocity = universeData3DAtPlayer.getCurrentPlayerData().velocity
 
         // Constant velocity 0.5
         val targetVelocity: Velocity = Velocity(
             weightedDouble3D.x,
             weightedDouble3D.y,
             weightedDouble3D.z
-        ).scaleVelocity(velocityMag)
-
-        val weightedVelocity = originalVelocity * ratio + targetVelocity * ratio
+        ).scaleVelocity(flockSpeed)
 
         val abmFlockingChangeVelocityCommand = ABMFlockingChangeVelocityCommand(
             toId = universeData3DAtPlayer.id,
             fromId = universeData3DAtPlayer.id,
             fromInt4D = universeData3DAtPlayer.getCurrentPlayerData().int4D,
-            targetVelocity = weightedVelocity,
+            targetVelocity = targetVelocity,
         )
 
         return listOf(abmFlockingChangeVelocityCommand)
