@@ -14,9 +14,7 @@ import relativitization.universe.global.EmptyGlobalMechanismList
 import relativitization.universe.global.name
 import relativitization.universe.maths.physics.Velocity
 import relativitization.universe.mechanisms.ABMFlockingMechanismLists
-import relativitization.universe.mechanisms.EmptyMechanismLists
 import relativitization.universe.mechanisms.name
-import kotlin.math.PI
 
 fun main() {
     val flockSpeed: Double = 0.5
@@ -36,7 +34,7 @@ fun main() {
         universeSettings = MutableUniverseSettings(
             universeName = "Flocking",
             commandCollectionName = AllCommandAvailability.name(),
-            mechanismCollectionName = EmptyMechanismLists.name(),
+            mechanismCollectionName = ABMFlockingMechanismLists.name(),
             globalMechanismCollectionName = EmptyGlobalMechanismList.name(),
             speedOfLight = 1.0,
             xDim = 10,
@@ -62,12 +60,4 @@ fun main() {
 
         universe.pureAIStep()
     }
-}
-
-internal fun computeOrderParameter(velocityList: List<Velocity>, flockSpeed: Double): Double {
-    val totalVelocity: Velocity = velocityList.fold(Velocity(0.0, 0.0, 0.0)) { acc, velocity ->
-        acc + velocity
-    }
-
-    return totalVelocity.mag() / flockSpeed / velocityList.size
 }
