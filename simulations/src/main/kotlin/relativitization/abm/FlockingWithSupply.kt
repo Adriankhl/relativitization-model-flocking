@@ -46,6 +46,7 @@ fun main() {
 
     df = df.concat(
         singleFlockingWithSupplyRun(
+            numPlayer = 50,
             nearByRadius = 3.0,
             flockSpeed = 0.5,
             maxAnglePerturbation = 0.5,
@@ -63,6 +64,7 @@ fun main() {
 }
 
 internal fun singleFlockingWithSupplyRun(
+    numPlayer: Int,
     nearByRadius: Double,
     flockSpeed: Double,
     maxAnglePerturbation: Double,
@@ -75,7 +77,7 @@ internal fun singleFlockingWithSupplyRun(
 
     val generateSetting = GenerateSettings(
         generateMethod = ABMFlockingGenerate.name(),
-        numPlayer = 50,
+        numPlayer = numPlayer,
         numHumanPlayer = 0,
         otherIntMap = mutableMapOf(),
         otherDoubleMap = mutableMapOf(

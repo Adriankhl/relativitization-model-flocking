@@ -31,23 +31,28 @@ fun main() {
     var df = initDf
 
     // range of speed of light
-    val speedOfLightList: List<Double> = (0..7).map { Notation.roundDecimal(0.6 + 0.2 * it, 1) }
+    val speedOfLightList: List<Double> = (0..8).map {
+        Notation.roundDecimal(0.1 + 0.1 * it, 1)
+    }
 
     // in radian
-    val maxAnglePerturbationList: List<Double> = (0..15).map { Notation.roundDecimal(0.1 + 0.2 * it, 1) }
+    val maxAnglePerturbationList: List<Double> = (0..4).map {
+        Notation.roundDecimal(0.8 + 0.2 * it, 1)
+    }
 
     for (speedOfLight in speedOfLightList) {
         for (maxAnglePerturbation in maxAnglePerturbationList) {
             println("Speed of light: $speedOfLight. Perturbation angle: $maxAnglePerturbation. ")
             df = df.concat(
                 singleFlockingWithSupplyRun(
-                    nearByRadius = 3.0,
-                    flockSpeed = 0.3,
+                    numPlayer = 200,
+                    nearByRadius = 5.0,
+                    flockSpeed = 0.05,
                     maxAnglePerturbation = maxAnglePerturbation,
                     speedOfLight = speedOfLight,
-                    numStep = 1000,
+                    numStep = 500,
                     initDataFrame = initDf,
-                    printStep = false,
+                    printStep = true,
                 )
             )
         }
@@ -56,5 +61,5 @@ fun main() {
     println(df.describe())
 
     File("data").mkdirs()
-    df.writeCSV("./data/flockingWithSupplyParameterScan.csv")
+    df.writeCSV("./data/flockingWithSupplyParameterScan3.csv")
 }
