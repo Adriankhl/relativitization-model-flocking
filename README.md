@@ -30,5 +30,5 @@ Now you can open this project with your favourite IDE that supports gradle, or y
 the simulation on the command line:
 
 ```
-./gradlew :simulations:run -PmainClass=relativitization.abm.FlockingWithSupplyKt
+./gradlew :simulations:run -PmainClass=relativitization.abm.FlockingKt
 ```
