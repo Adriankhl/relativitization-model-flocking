@@ -14,10 +14,14 @@ fun main() {
     val dfList: MutableList<DataFrame<*>> = mutableListOf()
 
     // range of speed of light
-    val speedOfLightList: List<Double> = (0..7).map { Notation.roundDecimal(0.6 + 0.2 * it, 1) }
+    val speedOfLightList: List<Double> = (0..7).map {
+        Notation.roundDecimal(0.6 + 0.2 * it, 1)
+    }
 
     // in radian
-    val maxAnglePerturbationList: List<Double> = (0..15).map { Notation.roundDecimal(0.1 + 0.2 * it, 1) }
+    val maxAnglePerturbationList: List<Double> = (0..15).map {
+        Notation.roundDecimal(0.1 + 0.2 * it, 1)
+    }
 
     for (speedOfLight in speedOfLightList) {
         for (maxAnglePerturbation in maxAnglePerturbationList) {

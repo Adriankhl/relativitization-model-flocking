@@ -17,6 +17,7 @@ import relativitization.universe.generate.method.abm.ABMFlockingGenerate
 import relativitization.universe.generate.method.name
 import relativitization.universe.global.EmptyGlobalMechanismList
 import relativitization.universe.global.name
+import relativitization.universe.maths.physics.Relativistic
 import relativitization.universe.maths.physics.Velocity
 import relativitization.universe.maths.random.Rand
 import relativitization.universe.mechanisms.ABMFlockingMechanismLists
@@ -91,12 +92,16 @@ internal fun singleFlockingRun(
 
         val orderParameter: Double = computeOrderParameter(
             currentPlayerDataList.map { it.velocity },
-            flockSpeed,
         )
 
         val totalRestMass: Double = currentPlayerDataList.sumOf {
             it.playerInternalData.abmFlockingData().restMass
         }
+
+        val averageDilatedTime: Double = computeAverageDilatedTime(
+            currentPlayerDataList.map { it.velocity },
+            speedOfLight,
+        )
 
         dfList.add(
             dataFrameOf(
@@ -107,6 +112,7 @@ internal fun singleFlockingRun(
                 "accelerationFuelFraction" to listOf(accelerationFuelFraction),
                 "orderParameter" to listOf(orderParameter),
                 "totalRestMass" to listOf(totalRestMass),
+                "averageDilatedTime" to listOf(averageDilatedTime),
             )
         )
 
@@ -120,10 +126,30 @@ internal fun singleFlockingRun(
     return dfList.concat()
 }
 
-internal fun computeOrderParameter(velocityList: List<Velocity>, flockSpeed: Double): Double {
+internal fun computeOrderParameter(
+    velocityList: List<Velocity>,
+): Double {
     val totalVelocity: Velocity = velocityList.fold(Velocity(0.0, 0.0, 0.0)) { acc, velocity ->
         acc + velocity
     }
 
-    return totalVelocity.mag() / flockSpeed / velocityList.size
+    val totalSpeed: Double = velocityList.fold(0.0) { acc, velocity ->
+        acc + velocity.mag()
+    }
+
+    return if (totalSpeed > 0.0) {
+        totalVelocity.mag() / totalSpeed
+    } else {
+        1.0
+    }
+}
+
+internal fun computeAverageDilatedTime(
+    velocityList: List<Velocity>,
+    speedOfLight: Double
+): Double {
+    val totalDilatedTime: Double = velocityList.fold(0.0) { acc, velocity ->
+        acc + Relativistic.dilatedTime(1.0, velocity, speedOfLight)
+    }
+    return totalDilatedTime / velocityList.size
 }
