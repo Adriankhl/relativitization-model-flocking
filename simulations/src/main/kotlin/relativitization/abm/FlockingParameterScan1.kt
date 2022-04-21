@@ -17,7 +17,7 @@ fun main() {
     // range of speed of light
     val speedOfLightList: List<Double> = DoubleRange.computeList(
         from = 0.6,
-        to = 2.0,
+        to = 1.4,
         step = 0.2,
         decimalPlace = 1
     )
