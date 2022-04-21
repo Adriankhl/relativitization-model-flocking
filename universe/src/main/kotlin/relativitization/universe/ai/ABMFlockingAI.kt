@@ -4,9 +4,10 @@ import relativitization.universe.data.PlayerData
 import relativitization.universe.data.UniverseData3DAtPlayer
 import relativitization.universe.data.commands.ABMFlockingChangeVelocityCommand
 import relativitization.universe.data.commands.Command
+import relativitization.universe.data.components.abmFlockingData
 import relativitization.universe.maths.physics.Double3D
-import relativitization.universe.maths.physics.Velocity
 import relativitization.universe.maths.physics.Intervals.distance
+import relativitization.universe.maths.physics.Velocity
 import relativitization.universe.utils.RelativitizationLogManager
 
 object ABMFlockingAI : AI() {
@@ -16,24 +17,21 @@ object ABMFlockingAI : AI() {
     override fun compute(universeData3DAtPlayer: UniverseData3DAtPlayer): List<Command> {
         logger.debug("Computing with FlockingAI")
 
-        val nearByRadius: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap.getOrElse(
-            "nearByRadius"
-        ) {
-            logger.error("No nearByRadius defined")
-            2.0
-        }
-        val desiredSeparation: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap.getOrElse(
-            "desiredSeparation"
-        ) {
-            logger.error("No desiredSeparation defined")
-            0.5
-        }
-        val flockSpeed: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap.getOrElse(
-            "flockSpeed"
-        ) {
-            logger.error("No flockSpeed defined")
-            0.5
-        }
+        val nearByRadius: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap
+            .getOrElse("nearByRadius") {
+                logger.error("No nearByRadius defined")
+                2.0
+            }
+        val desiredSeparation: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap
+            .getOrElse("desiredSeparation") {
+                logger.error("No desiredSeparation defined")
+                0.5
+            }
+        val flockSpeed: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap
+            .getOrElse("flockSpeed") {
+                logger.error("No flockSpeed defined")
+                0.5
+            }
 
         val cohesionDouble3D = cohesion(universeData3DAtPlayer, nearByRadius)
 
@@ -43,8 +41,10 @@ object ABMFlockingAI : AI() {
 
         val avoidBoundaryDouble3D: Double3D = avoidBoundary(universeData3DAtPlayer)
 
-        val weightedDouble3D =
-            cohesionDouble3D * 1.0 + alignmentDouble3D * 1.0 + separationDouble3D * 2.0 + avoidBoundaryDouble3D * 10.0
+        val weightedDouble3D = cohesionDouble3D * 1.0 +
+                alignmentDouble3D * 1.0 +
+                separationDouble3D * 2.0 +
+                avoidBoundaryDouble3D * 10.0
 
         // Constant velocity 0.5
         val targetVelocity: Velocity = Velocity(
@@ -58,6 +58,8 @@ object ABMFlockingAI : AI() {
             fromId = universeData3DAtPlayer.id,
             fromInt4D = universeData3DAtPlayer.getCurrentPlayerData().int4D,
             targetVelocity = targetVelocity,
+            maxDeltaRestMass = universeData3DAtPlayer.getCurrentPlayerData().playerInternalData
+                .abmFlockingData().restMass,
         )
 
         return listOf(abmFlockingChangeVelocityCommand)

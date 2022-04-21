@@ -15,12 +15,13 @@ data class ABMFlockingChangeVelocityCommand(
     override val fromId: Int,
     override val fromInt4D: Int4D,
     val targetVelocity: Velocity,
+    val maxDeltaRestMass: Double,
 ) : Command() {
     override fun execute(playerData: MutablePlayerData, universeSettings: UniverseSettings) {
 
         val targetVelocityData: TargetVelocityData = Relativistic.targetVelocityByPhotonRocket(
             initialRestMass = playerData.playerInternalData.abmFlockingData().restMass,
-            maxDeltaRestMass = playerData.playerInternalData.abmFlockingData().restMass,
+            maxDeltaRestMass = maxDeltaRestMass,
             initialVelocity = playerData.velocity.toVelocity(),
             targetVelocity = targetVelocity,
             speedOfLight = universeSettings.speedOfLight

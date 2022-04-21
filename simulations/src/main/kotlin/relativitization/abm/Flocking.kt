@@ -20,42 +20,21 @@ import relativitization.universe.global.name
 import relativitization.universe.maths.physics.Velocity
 import relativitization.universe.maths.random.Rand
 import relativitization.universe.mechanisms.ABMFlockingMechanismLists
-import relativitization.universe.mechanisms.EmptyMechanismLists
 import relativitization.universe.mechanisms.name
 import java.io.File
-import kotlin.math.PI
 
 fun main() {
     Rand.setSeed(100L)
 
-    val initDf = dataFrameOf(
-        "Step",
-        "speedOfLight",
-        "flockSpeed",
-        "maxAnglePerturbation",
-        "orderParameter",
-        "totalRestMass"
-    )(
-        -1,
-        1.0,
-        0.5,
-        0.5,
-        0.0,
-        0.0
-    ).drop(1)
-
-    var df = initDf
-
-    df = df.concat(
-        singleFlockingRun(
-            nearByRadius = 3.0,
-            flockSpeed = 0.5,
-            maxAnglePerturbation = 0.5,
-            speedOfLight = 1.0,
-            numStep = 1000,
-            initDataFrame = initDf,
-            printStep = true,
-        )
+    val df = singleFlockingRun(
+        numPlayer = 50,
+        nearByRadius = 3.0,
+        flockSpeed = 0.5,
+        maxAnglePerturbation = 0.5,
+        accelerationFuelFraction = 1.0,
+        speedOfLight = 1.0,
+        numStep = 1000,
+        printStep = true,
     )
 
     println(df.describe())
@@ -65,19 +44,20 @@ fun main() {
 }
 
 internal fun singleFlockingRun(
+    numPlayer: Int,
     nearByRadius: Double,
     flockSpeed: Double,
     maxAnglePerturbation: Double,
+    accelerationFuelFraction: Double,
     speedOfLight: Double,
     numStep: Int,
-    initDataFrame: DataFrame<*>,
     printStep: Boolean = false,
 ): DataFrame<*> {
-    var df = initDataFrame
+    val dfList: MutableList<DataFrame<*>> = mutableListOf()
 
     val generateSetting = GenerateSettings(
         generateMethod = ABMFlockingGenerate.name(),
-        numPlayer = 50,
+        numPlayer = numPlayer,
         numHumanPlayer = 0,
         otherIntMap = mutableMapOf(),
         otherDoubleMap = mutableMapOf(
@@ -89,16 +69,17 @@ internal fun singleFlockingRun(
         universeSettings = MutableUniverseSettings(
             universeName = "Flocking",
             commandCollectionName = AllCommandAvailability.name(),
-            mechanismCollectionName = EmptyMechanismLists.name(),
+            mechanismCollectionName = ABMFlockingMechanismLists.name(),
             globalMechanismCollectionName = EmptyGlobalMechanismList.name(),
             speedOfLight = speedOfLight,
             xDim = 10,
             yDim = 10,
             zDim = 10,
             otherDoubleMap = mutableMapOf(
+                "flockSpeed" to flockSpeed,
                 "nearByRadius" to nearByRadius,
                 "maxAnglePerturbation" to maxAnglePerturbation,
-                "flockSpeed" to flockSpeed,
+                "accelerationFuelFraction" to accelerationFuelFraction,
             ),
         )
     )
@@ -107,6 +88,7 @@ internal fun singleFlockingRun(
 
     for (turn in 1..numStep) {
         val currentPlayerDataList: List<PlayerData> = universe.getCurrentPlayerDataList()
+
         val orderParameter: Double = computeOrderParameter(
             currentPlayerDataList.map { it.velocity },
             flockSpeed,
@@ -116,7 +98,17 @@ internal fun singleFlockingRun(
             it.playerInternalData.abmFlockingData().restMass
         }
 
-        df = df.append(turn, speedOfLight, flockSpeed, maxAnglePerturbation, orderParameter, totalRestMass)
+        dfList.add(
+            dataFrameOf(
+                "turn" to listOf(turn),
+                "speedOfLight" to listOf(speedOfLight),
+                "flockSpeed" to listOf(flockSpeed),
+                "maxAnglePerturbation" to listOf(maxAnglePerturbation),
+                "accelerationFuelFraction" to listOf(accelerationFuelFraction),
+                "orderParameter" to listOf(orderParameter),
+                "totalRestMass" to listOf(totalRestMass),
+            )
+        )
 
         if (printStep) {
             println("Turn: $turn. Order parameter: $orderParameter. Total rest mass: $totalRestMass. ")
@@ -125,7 +117,7 @@ internal fun singleFlockingRun(
         universe.pureAIStep()
     }
 
-    return df
+    return dfList.concat()
 }
 
 internal fun computeOrderParameter(velocityList: List<Velocity>, flockSpeed: Double): Double {
