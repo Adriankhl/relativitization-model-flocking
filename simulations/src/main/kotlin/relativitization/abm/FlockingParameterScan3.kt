@@ -42,7 +42,7 @@ fun main() {
                     accelerationFuelFraction = 1.0,
                     speedOfLight = speedOfLight,
                     numStep = 500,
-                    printStep = true,
+                    printStep = false,
                 )
             )
         }
