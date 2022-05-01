@@ -23,7 +23,13 @@ Copy all essential files from Relativitization.
 
 ```
 cd ../relativitization-model-flocking
-cp ../relativitization/relativitization-model-base/* .
+cp -r ../relativitization/relativitization-model-base/* .
+```
+
+You may also want to update the `.gitignore` file
+
+```
+cp ../relativitization/model-gitignore.txt .gitignore
 ```
 
 Now you can open this project with your favourite IDE that supports gradle, or you can try to run
