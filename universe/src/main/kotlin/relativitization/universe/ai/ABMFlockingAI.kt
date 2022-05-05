@@ -67,14 +67,7 @@ object ABMFlockingAI : AI() {
 
     private fun cohesion(universeData3DAtPlayer: UniverseData3DAtPlayer, radius: Double): Double3D {
         val selfDouble4D = universeData3DAtPlayer.getCurrentPlayerData().double4D
-        val nearByPlayerData: List<PlayerData> =
-            universeData3DAtPlayer.playerDataMap.values.filter {
-                val otherDouble4D = it.double4D
-                distance(
-                    selfDouble4D,
-                    otherDouble4D
-                ) < radius && (it.playerId != universeData3DAtPlayer.getCurrentPlayerData().playerId)
-            }
+        val nearByPlayerData: List<PlayerData> = universeData3DAtPlayer.getNeighbourInSphere(radius)
 
         return if (nearByPlayerData.isEmpty()) {
             Double3D(0.0, 0.0, 0.0)
@@ -99,16 +92,7 @@ object ABMFlockingAI : AI() {
         universeData3DAtPlayer: UniverseData3DAtPlayer,
         radius: Double
     ): Double3D {
-        val selfDouble4D = universeData3DAtPlayer.getCurrentPlayerData().double4D
-        val nearByPlayerData: List<PlayerData> =
-            universeData3DAtPlayer.playerDataMap.values.filter {
-                val otherDouble4D = it.double4D
-                distance(
-                    selfDouble4D,
-                    otherDouble4D
-                ) < radius && (it.playerId != universeData3DAtPlayer.getCurrentPlayerData().playerId)
-            }
-
+        val nearByPlayerData: List<PlayerData> = universeData3DAtPlayer.getNeighbourInSphere(radius)
 
         return if (nearByPlayerData.isEmpty()) {
             Double3D(0.0, 0.0, 0.0)

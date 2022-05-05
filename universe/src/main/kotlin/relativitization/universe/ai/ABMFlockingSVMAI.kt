@@ -38,16 +38,8 @@ object ABMFlockingSVMAI : AI() {
                 1.0
             }
 
-        val selfDouble4D = universeData3DAtPlayer.getCurrentPlayerData().double4D
-
-        val nearByPlayerDataList: List<PlayerData> = universeData3DAtPlayer.playerDataMap
-            .values.filter {
-                val otherDouble4D = it.double4D
-                Intervals.distance(
-                    selfDouble4D,
-                    otherDouble4D
-                ) < nearByRadius
-            }
+        val nearByPlayerDataList: List<PlayerData> =
+            universeData3DAtPlayer.getNeighbourInSphere(nearByRadius)
 
         val averageVelocity: Velocity = nearByPlayerDataList.fold(
             Velocity(0.0, 0.0, 0.0)
