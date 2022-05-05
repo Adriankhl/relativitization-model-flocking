@@ -389,7 +389,6 @@ universe/src/test/kotlin/relativitization/universe/mechanisms/defaults/regular/d
 universe/src/test/kotlin/relativitization/universe/utils/I18NStringTest.kt
 universe/src/test/kotlin/relativitization/universe/ai/DefaultAITest.kt
 universe/src/test/kotlin/relativitization/universe/UniverseTest.kt
-universe/src/test/kotlin/relativitization/universe/FileTest.kt
 universe/build.gradle.kts
 gradle.properties
 gradlew
