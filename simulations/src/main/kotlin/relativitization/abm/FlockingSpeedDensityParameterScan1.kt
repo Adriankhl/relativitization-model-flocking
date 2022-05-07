@@ -45,7 +45,7 @@ fun main() {
                     maxAnglePerturbation = maxAnglePerturbation,
                     accelerationFuelFraction = 1.0,
                     numStep = 1000,
-                    printStep = true
+                    printStep = false
                 )
             )
         }
