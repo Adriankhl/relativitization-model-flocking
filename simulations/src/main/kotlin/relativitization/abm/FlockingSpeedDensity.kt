@@ -1,10 +1,10 @@
 package relativitization.abm
 
 import org.jetbrains.kotlinx.dataframe.DataFrame
-import org.jetbrains.kotlinx.dataframe.api.*
-import org.jetbrains.kotlinx.dataframe.io.writeCSV
+import org.jetbrains.kotlinx.dataframe.api.concat
+import org.jetbrains.kotlinx.dataframe.api.dataFrameOf
 import relativitization.universe.Universe
-import relativitization.universe.ai.ABMFlockingSVMAI
+import relativitization.universe.ai.ABMFlockingDensitySpeedAI
 import relativitization.universe.ai.name
 import relativitization.universe.data.MutableUniverseSettings
 import relativitization.universe.data.PlayerData
@@ -17,37 +17,17 @@ import relativitization.universe.generate.abm.ABMFlockingGenerate
 import relativitization.universe.generate.name
 import relativitization.universe.global.EmptyGlobalMechanismList
 import relativitization.universe.global.name
-import relativitization.universe.maths.physics.Relativistic
-import relativitization.universe.maths.physics.Velocity
-import relativitization.universe.maths.random.Rand
 import relativitization.universe.mechanisms.ABMFlockingMechanismLists
 import relativitization.universe.mechanisms.name
-import java.io.File
 
-fun main() {
-    Rand.setSeed(100L)
-
-    val df = flockingSingleRun(
-        numPlayer = 50,
-        nearbyRadius = 3.0,
-        flockSpeed = 0.5,
-        maxAnglePerturbation = 0.5,
-        accelerationFuelFraction = 1.0,
-        speedOfLight = 1.0,
-        numStep = 1000,
-        printStep = true,
-    )
-
-    println(df.describe())
-
-    File("data").mkdirs()
-    df.writeCSV("./data/flocking.csv")
-}
-
-internal fun flockingSingleRun(
+internal fun flockingSpeedDensitySingleRun(
     numPlayer: Int,
+    initialFlockSpeed: Double,
+    minFlockSpeed: Double,
+    maxFlockSpeed: Double,
+    speedDecayFactor: Double,
     nearbyRadius: Double,
-    flockSpeed: Double,
+    densityNearbyRadius: Double,
     maxAnglePerturbation: Double,
     accelerationFuelFraction: Double,
     speedOfLight: Double,
@@ -63,10 +43,10 @@ internal fun flockingSingleRun(
         otherIntMap = mutableMapOf(),
         otherDoubleMap = mutableMapOf(
             "initialRestMass" to 1.0,
-            "initialFlockSpeed" to flockSpeed,
+            "initialFlockSpeed" to initialFlockSpeed,
         ),
         otherStringMap = mutableMapOf(
-            "aiName" to ABMFlockingSVMAI.name(),
+            "aiName" to ABMFlockingDensitySpeedAI.name(),
         ),
         universeSettings = MutableUniverseSettings(
             universeName = "Flocking",
@@ -78,8 +58,11 @@ internal fun flockingSingleRun(
             yDim = 10,
             zDim = 10,
             otherDoubleMap = mutableMapOf(
-                "flockSpeed" to flockSpeed,
+                "minFlockSpeed" to minFlockSpeed,
+                "maxFlockSpeed" to maxFlockSpeed,
+                "speedDecayFactor" to speedDecayFactor,
                 "nearbyRadius" to nearbyRadius,
+                "densityNearbyRadius" to densityNearbyRadius,
                 "maxAnglePerturbation" to maxAnglePerturbation,
                 "accelerationFuelFraction" to accelerationFuelFraction,
             ),
@@ -108,7 +91,9 @@ internal fun flockingSingleRun(
             dataFrameOf(
                 "turn" to listOf(turn),
                 "speedOfLight" to listOf(speedOfLight),
-                "flockSpeed" to listOf(flockSpeed),
+                "minFlockSpeed" to listOf(minFlockSpeed),
+                "maxFlockSpeed" to listOf(maxFlockSpeed),
+                "speedDecayFactor" to listOf(speedDecayFactor),
                 "maxAnglePerturbation" to listOf(maxAnglePerturbation),
                 "accelerationFuelFraction" to listOf(accelerationFuelFraction),
                 "orderParameter" to listOf(orderParameter),
@@ -125,32 +110,4 @@ internal fun flockingSingleRun(
     }
 
     return dfList.concat()
-}
-
-internal fun computeOrderParameter(
-    velocityList: List<Velocity>,
-): Double {
-    val totalVelocity: Velocity = velocityList.fold(Velocity(0.0, 0.0, 0.0)) { acc, velocity ->
-        acc + velocity
-    }
-
-    val totalSpeed: Double = velocityList.fold(0.0) { acc, velocity ->
-        acc + velocity.mag()
-    }
-
-    return if (totalSpeed > 0.0) {
-        totalVelocity.mag() / totalSpeed
-    } else {
-        1.0
-    }
-}
-
-internal fun computeAverageDilatedTime(
-    velocityList: List<Velocity>,
-    speedOfLight: Double
-): Double {
-    val totalDilatedTime: Double = velocityList.fold(0.0) { acc, velocity ->
-        acc + Relativistic.dilatedTime(1.0, velocity, speedOfLight)
-    }
-    return totalDilatedTime / velocityList.size
 }

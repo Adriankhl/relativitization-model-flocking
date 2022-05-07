@@ -33,9 +33,9 @@ fun main() {
         for (maxAnglePerturbation in maxAnglePerturbationList) {
             println("Speed of light: $speedOfLight. Perturbation angle: $maxAnglePerturbation. ")
             dfList.add(
-                singleFlockingRun(
+                flockingSingleRun(
                     numPlayer = 50,
-                    nearByRadius = 3.0,
+                    nearbyRadius = 3.0,
                     flockSpeed = 0.3,
                     maxAnglePerturbation = maxAnglePerturbation,
                     accelerationFuelFraction = 1.0,

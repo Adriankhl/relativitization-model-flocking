@@ -17,9 +17,9 @@ object ABMFlockingAI : AI() {
     override fun compute(universeData3DAtPlayer: UniverseData3DAtPlayer): List<Command> {
         logger.debug("Computing with FlockingAI")
 
-        val nearByRadius: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap
-            .getOrElse("nearByRadius") {
-                logger.error("No nearByRadius defined")
+        val nearbyRadius: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap
+            .getOrElse("nearbyRadius") {
+                logger.error("No nearbyRadius defined")
                 2.0
             }
         val desiredSeparation: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap
@@ -33,9 +33,9 @@ object ABMFlockingAI : AI() {
                 0.5
             }
 
-        val cohesionDouble3D = cohesion(universeData3DAtPlayer, nearByRadius)
+        val cohesionDouble3D = cohesion(universeData3DAtPlayer, nearbyRadius)
 
-        val alignmentDouble3D: Double3D = alignment(universeData3DAtPlayer, nearByRadius)
+        val alignmentDouble3D: Double3D = alignment(universeData3DAtPlayer, nearbyRadius)
 
         val separationDouble3D: Double3D = separation(universeData3DAtPlayer, desiredSeparation)
 
@@ -67,22 +67,22 @@ object ABMFlockingAI : AI() {
 
     private fun cohesion(universeData3DAtPlayer: UniverseData3DAtPlayer, radius: Double): Double3D {
         val selfDouble4D = universeData3DAtPlayer.getCurrentPlayerData().double4D
-        val nearByPlayerData: List<PlayerData> = universeData3DAtPlayer.getNeighbourInSphere(radius)
+        val nearbyPlayerData: List<PlayerData> = universeData3DAtPlayer.getNeighbourInSphere(radius)
 
-        return if (nearByPlayerData.isEmpty()) {
+        return if (nearbyPlayerData.isEmpty()) {
             Double3D(0.0, 0.0, 0.0)
         } else {
-            val avgX: Double = nearByPlayerData.fold(0.0) { acc, playerData ->
+            val avgX: Double = nearbyPlayerData.fold(0.0) { acc, playerData ->
                 acc + playerData.double4D.x
-            } / nearByPlayerData.size.toDouble()
+            } / nearbyPlayerData.size.toDouble()
 
-            val avgY: Double = nearByPlayerData.fold(0.0) { acc, playerData ->
+            val avgY: Double = nearbyPlayerData.fold(0.0) { acc, playerData ->
                 acc + playerData.double4D.y
-            } / nearByPlayerData.size.toDouble()
+            } / nearbyPlayerData.size.toDouble()
 
-            val avgZ: Double = nearByPlayerData.fold(0.0) { acc, playerData ->
+            val avgZ: Double = nearbyPlayerData.fold(0.0) { acc, playerData ->
                 acc + playerData.double4D.z
-            } / nearByPlayerData.size.toDouble()
+            } / nearbyPlayerData.size.toDouble()
 
             Double3D(avgX - selfDouble4D.x, avgY - selfDouble4D.y, avgZ - selfDouble4D.z)
         }
@@ -92,22 +92,22 @@ object ABMFlockingAI : AI() {
         universeData3DAtPlayer: UniverseData3DAtPlayer,
         radius: Double
     ): Double3D {
-        val nearByPlayerData: List<PlayerData> = universeData3DAtPlayer.getNeighbourInSphere(radius)
+        val nearbyPlayerData: List<PlayerData> = universeData3DAtPlayer.getNeighbourInSphere(radius)
 
-        return if (nearByPlayerData.isEmpty()) {
+        return if (nearbyPlayerData.isEmpty()) {
             Double3D(0.0, 0.0, 0.0)
         } else {
-            val avgX: Double = nearByPlayerData.fold(0.0) { acc, playerData ->
+            val avgX: Double = nearbyPlayerData.fold(0.0) { acc, playerData ->
                 acc + playerData.velocity.vx
-            } / nearByPlayerData.size.toDouble()
+            } / nearbyPlayerData.size.toDouble()
 
-            val avgY: Double = nearByPlayerData.fold(0.0) { acc, playerData ->
+            val avgY: Double = nearbyPlayerData.fold(0.0) { acc, playerData ->
                 acc + playerData.velocity.vy
-            } / nearByPlayerData.size.toDouble()
+            } / nearbyPlayerData.size.toDouble()
 
-            val avgZ: Double = nearByPlayerData.fold(0.0) { acc, playerData ->
+            val avgZ: Double = nearbyPlayerData.fold(0.0) { acc, playerData ->
                 acc + playerData.velocity.vz
-            } / nearByPlayerData.size.toDouble()
+            } / nearbyPlayerData.size.toDouble()
 
             Double3D(avgX, avgY, avgZ)
         }
@@ -118,17 +118,17 @@ object ABMFlockingAI : AI() {
         desiredSeparation: Double
     ): Double3D {
         val selfDouble4D = universeData3DAtPlayer.getCurrentPlayerData().double4D
-        val nearByPlayerData: List<PlayerData> =
+        val nearbyPlayerData: List<PlayerData> =
             universeData3DAtPlayer.playerDataMap.values.filter {
                 val otherDouble4D = it.double4D
                 val distance = distance(selfDouble4D, otherDouble4D)
                 (distance < desiredSeparation) && (distance > 0.0) && (it.playerId != universeData3DAtPlayer.getCurrentPlayerData().playerId)
             }
 
-        return if (nearByPlayerData.isEmpty()) {
+        return if (nearbyPlayerData.isEmpty()) {
             Double3D(0.0, 0.0, 0.0)
         } else {
-            val avgX: Double = nearByPlayerData.fold(0.0) { acc, playerData ->
+            val avgX: Double = nearbyPlayerData.fold(0.0) { acc, playerData ->
                 val otherDouble4D = playerData.double4D
                 val distance = distance(selfDouble4D, otherDouble4D)
                 val double3D = Double3D(
@@ -142,9 +142,9 @@ object ABMFlockingAI : AI() {
                 } else {
                     acc + 100.0
                 }
-            } / nearByPlayerData.size.toDouble()
+            } / nearbyPlayerData.size.toDouble()
 
-            val avgY: Double = nearByPlayerData.fold(0.0) { acc, playerData ->
+            val avgY: Double = nearbyPlayerData.fold(0.0) { acc, playerData ->
                 val otherDouble4D = playerData.double4D
                 val distance = distance(selfDouble4D, otherDouble4D)
                 val double3D = Double3D(
@@ -158,9 +158,9 @@ object ABMFlockingAI : AI() {
                 } else {
                     acc + 100.0
                 }
-            } / nearByPlayerData.size.toDouble()
+            } / nearbyPlayerData.size.toDouble()
 
-            val avgZ: Double = nearByPlayerData.fold(0.0) { acc, playerData ->
+            val avgZ: Double = nearbyPlayerData.fold(0.0) { acc, playerData ->
                 val otherDouble4D = playerData.double4D
                 val distance = distance(selfDouble4D, otherDouble4D)
                 val double3D = Double3D(
@@ -174,7 +174,7 @@ object ABMFlockingAI : AI() {
                 } else {
                     acc + 100.0
                 }
-            } / nearByPlayerData.size.toDouble()
+            } / nearbyPlayerData.size.toDouble()
 
             Double3D(avgX, avgY, avgZ)
         }

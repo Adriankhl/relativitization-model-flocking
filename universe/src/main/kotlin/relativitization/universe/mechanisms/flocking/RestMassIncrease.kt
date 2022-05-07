@@ -20,7 +20,7 @@ object RestMassIncrease : Mechanism() {
         val flockingData: MutableABMFlockingData =
             mutablePlayerData.playerInternalData.abmFlockingData()
 
-        flockingData.deltaRestMass = flockingData.lastRestMass - flockingData.restMass
+        flockingData.restMassFraction = flockingData.lastRestMass / flockingData.restMass
 
         flockingData.restMass += 1.0
         flockingData.lastRestMass = flockingData.restMass

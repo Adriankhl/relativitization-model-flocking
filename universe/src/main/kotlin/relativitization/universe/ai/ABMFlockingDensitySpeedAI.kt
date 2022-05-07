@@ -31,15 +31,15 @@ object ABMFlockingDensitySpeedAI : AI() {
                 0.1
             }
 
-        val nearByRadius: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap
-            .getOrElse("nearByRadius") {
-                logger.error("No nearByRadius defined")
+        val nearbyRadius: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap
+            .getOrElse("nearbyRadius") {
+                logger.error("No nearbyRadius defined")
                 3.0
             }
 
-        val densityNearByRadius: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap
-            .getOrElse("densityNearByRadius") {
-                logger.error("No densityNearByRadius defined")
+        val densityNearbyRadius: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap
+            .getOrElse("densityNearbyRadius") {
+                logger.error("No densityNearbyRadius defined")
                 3.0
             }
 
@@ -59,11 +59,11 @@ object ABMFlockingDensitySpeedAI : AI() {
             minFlockSpeed = minFlockSpeed,
             maxFlockSpeed = maxFlockSpeed,
             speedDecayFactor = speedDecayFactor,
-            densityNearbyRadius = densityNearByRadius,
+            densityNearbyRadius = densityNearbyRadius,
             universeData3DAtPlayer = universeData3DAtPlayer,
         )
 
-        val averageVelocity: Velocity = universeData3DAtPlayer.getPlayerInSphere(nearByRadius)
+        val averageVelocity: Velocity = universeData3DAtPlayer.getPlayerInSphere(nearbyRadius)
             .fold(Velocity(0.0, 0.0, 0.0)) { acc, playerData ->
                 acc + playerData.velocity
             }.scaleVelocity(flockSpeed)

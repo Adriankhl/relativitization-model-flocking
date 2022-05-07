@@ -23,17 +23,18 @@ object ABMFlockingGenerate : ABMGenerateUniverseMethod() {
             1.0
         }
 
-        val aiName: String = settings.otherStringMap.getOrElse("aiName") {
-            logger.error("No aiName defined")
-            ABMFlockingAI.name()
-        }
-
-        val initialFlockSpeed: Double = settings.universeSettings.otherDoubleMap.getOrElse(
+        val initialFlockSpeed: Double = settings.otherDoubleMap.getOrElse(
             "initialFlockSpeed"
         ) {
             logger.error("No initialFlockSpeed defined")
             0.5
         }
+
+        val aiName: String = settings.otherStringMap.getOrElse("aiName") {
+            logger.error("No aiName defined")
+            ABMFlockingAI.name()
+        }
+
 
         val data = MutableUniverseData4D(
             create4DGrid(

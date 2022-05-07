@@ -20,9 +20,9 @@ object ABMFlockingSVMAI : AI() {
                 0.5
             }
 
-        val nearByRadius: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap
-            .getOrElse("nearByRadius") {
-                logger.error("No nearByRadius defined")
+        val nearbyRadius: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap
+            .getOrElse("nearbyRadius") {
+                logger.error("No nearbyRadius defined")
                 3.0
             }
 
@@ -38,7 +38,7 @@ object ABMFlockingSVMAI : AI() {
                 1.0
             }
 
-        val averageVelocity: Velocity = universeData3DAtPlayer.getPlayerInSphere(nearByRadius)
+        val averageVelocity: Velocity = universeData3DAtPlayer.getPlayerInSphere(nearbyRadius)
             .fold(Velocity(0.0, 0.0, 0.0)) { acc, playerData ->
                 acc + playerData.velocity
             }.scaleVelocity(flockSpeed)
