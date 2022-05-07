@@ -1,27 +1,5 @@
 package relativitization.abm
 
-import org.jetbrains.kotlinx.dataframe.DataFrame
-import org.jetbrains.kotlinx.dataframe.api.*
-import org.jetbrains.kotlinx.dataframe.io.writeCSV
-import relativitization.universe.Universe
-import relativitization.universe.ai.ABMFlockingSVMAI
-import relativitization.universe.ai.name
-import relativitization.universe.data.MutableUniverseSettings
-import relativitization.universe.data.PlayerData
-import relativitization.universe.data.commands.AllCommandAvailability
-import relativitization.universe.data.commands.name
-import relativitization.universe.data.components.abmFlockingData
-import relativitization.universe.generate.method.GenerateSettings
-import relativitization.universe.generate.method.GenerateUniverseMethodCollection
-import relativitization.universe.generate.method.abm.ABMFlockingGenerate
-import relativitization.universe.generate.method.name
-import relativitization.universe.global.EmptyGlobalMechanismList
-import relativitization.universe.global.name
-import relativitization.universe.maths.random.Rand
-import relativitization.universe.mechanisms.EmptyMechanismLists
-import relativitization.universe.mechanisms.name
-import java.io.File
-
 /*
 fun main() {
     Rand.setSeed(100L)

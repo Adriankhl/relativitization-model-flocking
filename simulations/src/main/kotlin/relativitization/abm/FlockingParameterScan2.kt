@@ -5,7 +5,6 @@ import org.jetbrains.kotlinx.dataframe.api.concat
 import org.jetbrains.kotlinx.dataframe.api.describe
 import org.jetbrains.kotlinx.dataframe.io.writeCSV
 import relativitization.universe.maths.collection.DoubleRange
-import relativitization.universe.maths.number.Notation
 import relativitization.universe.maths.random.Rand
 import java.io.File
 

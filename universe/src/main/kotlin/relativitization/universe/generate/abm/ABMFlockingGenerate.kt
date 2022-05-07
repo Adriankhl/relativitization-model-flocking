@@ -1,14 +1,13 @@
-package relativitization.universe.generate.method.abm
+package relativitization.universe.generate.abm
 
 import relativitization.universe.ai.ABMFlockingAI
-import relativitization.universe.ai.ABMFlockingSVMAI
 import relativitization.universe.ai.name
 import relativitization.universe.data.*
 import relativitization.universe.data.components.MutableABMFlockingData
 import relativitization.universe.maths.physics.MutableVelocity
 import relativitization.universe.data.global.UniverseGlobalData
 import relativitization.universe.data.serializer.DataSerializer
-import relativitization.universe.generate.method.GenerateSettings
+import relativitization.universe.generate.GenerateSettings
 import relativitization.universe.maths.grid.Grids.create4DGrid
 import relativitization.universe.maths.random.Rand
 import relativitization.universe.utils.RelativitizationLogManager

@@ -11,10 +11,10 @@ import relativitization.universe.data.PlayerData
 import relativitization.universe.data.commands.AllCommandAvailability
 import relativitization.universe.data.commands.name
 import relativitization.universe.data.components.abmFlockingData
-import relativitization.universe.generate.method.GenerateSettings
-import relativitization.universe.generate.method.GenerateUniverseMethodCollection
-import relativitization.universe.generate.method.abm.ABMFlockingGenerate
-import relativitization.universe.generate.method.name
+import relativitization.universe.generate.GenerateSettings
+import relativitization.universe.generate.GenerateUniverseMethodCollection
+import relativitization.universe.generate.abm.ABMFlockingGenerate
+import relativitization.universe.generate.name
 import relativitization.universe.global.EmptyGlobalMechanismList
 import relativitization.universe.global.name
 import relativitization.universe.maths.physics.Relativistic
