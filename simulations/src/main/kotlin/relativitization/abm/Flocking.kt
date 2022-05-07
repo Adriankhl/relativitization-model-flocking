@@ -29,11 +29,11 @@ fun main() {
 
     val df = flockingSingleRun(
         numPlayer = 50,
-        nearbyRadius = 3.0,
+        speedOfLight = 1.0,
         flockSpeed = 0.5,
+        nearbyRadius = 3.0,
         maxAnglePerturbation = 0.5,
         accelerationFuelFraction = 1.0,
-        speedOfLight = 1.0,
         numStep = 1000,
         printStep = true,
     )
@@ -46,11 +46,11 @@ fun main() {
 
 internal fun flockingSingleRun(
     numPlayer: Int,
-    nearbyRadius: Double,
+    speedOfLight: Double,
     flockSpeed: Double,
+    nearbyRadius: Double,
     maxAnglePerturbation: Double,
     accelerationFuelFraction: Double,
-    speedOfLight: Double,
     numStep: Int,
     printStep: Boolean = false,
 ): DataFrame<*> {
@@ -95,14 +95,15 @@ internal fun flockingSingleRun(
             currentPlayerDataList.map { it.velocity },
         )
 
-        val totalRestMass: Double = currentPlayerDataList.sumOf {
-            it.playerInternalData.abmFlockingData().restMass
+        val restMassFractionMean: Double = currentPlayerDataList.sumOf {
+            it.playerInternalData.abmFlockingData().restMassFraction
+        } / currentPlayerDataList.size
+
+        val dilatedTimeList: List<Double> = currentPlayerDataList.map {
+            Relativistic.dilatedTime(1.0, it.velocity, speedOfLight)
         }
 
-        val averageDilatedTime: Double = computeAverageDilatedTime(
-            currentPlayerDataList.map { it.velocity },
-            speedOfLight,
-        )
+        val dilatedTimeMean: Double = dilatedTimeList.sum() / dilatedTimeList.size
 
         dfList.add(
             dataFrameOf(
@@ -112,13 +113,15 @@ internal fun flockingSingleRun(
                 "maxAnglePerturbation" to listOf(maxAnglePerturbation),
                 "accelerationFuelFraction" to listOf(accelerationFuelFraction),
                 "orderParameter" to listOf(orderParameter),
-                "totalRestMass" to listOf(totalRestMass),
-                "averageDilatedTime" to listOf(averageDilatedTime),
+                "restMassFractionMean" to listOf(restMassFractionMean),
+                "dilatedTimeMean" to listOf(dilatedTimeMean),
             )
         )
 
         if (printStep) {
-            println("Turn: $turn. Order parameter: $orderParameter. Total rest mass: $totalRestMass. ")
+            println("Turn: $turn. " +
+                    "Order parameter: $orderParameter." +
+                    "Rest mass fraction mean: $restMassFractionMean. ")
         }
 
         universe.pureAIStep()
@@ -143,14 +146,4 @@ internal fun computeOrderParameter(
     } else {
         1.0
     }
-}
-
-internal fun computeAverageDilatedTime(
-    velocityList: List<Velocity>,
-    speedOfLight: Double
-): Double {
-    val totalDilatedTime: Double = velocityList.fold(0.0) { acc, velocity ->
-        acc + Relativistic.dilatedTime(1.0, velocity, speedOfLight)
-    }
-    return totalDilatedTime / velocityList.size
 }

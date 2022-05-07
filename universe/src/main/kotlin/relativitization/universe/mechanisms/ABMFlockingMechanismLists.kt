@@ -1,10 +1,10 @@
 package relativitization.universe.mechanisms
 
-import relativitization.universe.mechanisms.flocking.RestMassIncrease
+import relativitization.universe.mechanisms.flocking.RestMassReset
 
 object ABMFlockingMechanismLists : MechanismLists() {
     override val regularMechanismList: List<Mechanism> = listOf(
-        RestMassIncrease
+        RestMassReset
     )
 
     override val dilatedMechanismList: List<Mechanism> = listOf()

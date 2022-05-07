@@ -3,6 +3,8 @@ package relativitization.abm
 import org.jetbrains.kotlinx.dataframe.DataFrame
 import org.jetbrains.kotlinx.dataframe.api.concat
 import org.jetbrains.kotlinx.dataframe.api.dataFrameOf
+import org.jetbrains.kotlinx.dataframe.api.describe
+import org.jetbrains.kotlinx.dataframe.io.writeCSV
 import relativitization.universe.Universe
 import relativitization.universe.ai.ABMFlockingDensitySpeedAI
 import relativitization.universe.ai.name
@@ -17,11 +19,40 @@ import relativitization.universe.generate.abm.ABMFlockingGenerate
 import relativitization.universe.generate.name
 import relativitization.universe.global.EmptyGlobalMechanismList
 import relativitization.universe.global.name
+import relativitization.universe.maths.physics.Relativistic
+import relativitization.universe.maths.random.Rand
 import relativitization.universe.mechanisms.ABMFlockingMechanismLists
 import relativitization.universe.mechanisms.name
+import java.io.File
+import kotlin.math.pow
+
+fun main() {
+    Rand.setSeed(100L)
+
+    val df = flockingSpeedDensitySingleRun(
+        numPlayer = 50,
+        speedOfLight = 1.0,
+        initialFlockSpeed = 0.5,
+        minFlockSpeed = 0.1,
+        maxFlockSpeed = 0.9,
+        speedDecayFactor = 0.5,
+        nearbyRadius = 3.0,
+        densityNearbyRadius = 1.0,
+        maxAnglePerturbation = 0.5,
+        accelerationFuelFraction = 1.0,
+        numStep = 1000,
+        printStep = true
+    )
+
+    println(df.describe())
+
+    File("data").mkdirs()
+    df.writeCSV("./data/flockingSpeedDensity.csv")
+}
 
 internal fun flockingSpeedDensitySingleRun(
     numPlayer: Int,
+    speedOfLight: Double,
     initialFlockSpeed: Double,
     minFlockSpeed: Double,
     maxFlockSpeed: Double,
@@ -30,7 +61,6 @@ internal fun flockingSpeedDensitySingleRun(
     densityNearbyRadius: Double,
     maxAnglePerturbation: Double,
     accelerationFuelFraction: Double,
-    speedOfLight: Double,
     numStep: Int,
     printStep: Boolean = false,
 ): DataFrame<*> {
@@ -78,14 +108,23 @@ internal fun flockingSpeedDensitySingleRun(
             currentPlayerDataList.map { it.velocity },
         )
 
-        val totalRestMass: Double = currentPlayerDataList.sumOf {
-            it.playerInternalData.abmFlockingData().restMass
+        val restMassFractionMean: Double = currentPlayerDataList.sumOf {
+            it.playerInternalData.abmFlockingData().restMassFraction
+        } / currentPlayerDataList.size
+
+        val speedList: List<Double> = currentPlayerDataList.map {
+            it.velocity.mag()
         }
 
-        val averageDilatedTime: Double = computeAverageDilatedTime(
-            currentPlayerDataList.map { it.velocity },
-            speedOfLight,
-        )
+        val speedMean: Double = speedList.sum() / speedList.size
+
+        val speedVariance: Double = speedList.sumOf { (it - speedMean).pow(2) } / speedList.size
+
+        val dilatedTimeList: List<Double> = currentPlayerDataList.map {
+            Relativistic.dilatedTime(1.0, it.velocity, speedOfLight)
+        }
+
+        val dilatedTimeMean: Double = dilatedTimeList.sum() / dilatedTimeList.size
 
         dfList.add(
             dataFrameOf(
@@ -97,13 +136,19 @@ internal fun flockingSpeedDensitySingleRun(
                 "maxAnglePerturbation" to listOf(maxAnglePerturbation),
                 "accelerationFuelFraction" to listOf(accelerationFuelFraction),
                 "orderParameter" to listOf(orderParameter),
-                "totalRestMass" to listOf(totalRestMass),
-                "averageDilatedTime" to listOf(averageDilatedTime),
+                "restMassFractionMean" to listOf(restMassFractionMean),
+                "dilatedTimeMean" to listOf(dilatedTimeMean),
+                "speedMean" to listOf(speedMean),
+                "speedVariance" to listOf(speedVariance),
             )
         )
 
         if (printStep) {
-            println("Turn: $turn. Order parameter: $orderParameter. Total rest mass: $totalRestMass. ")
+            println("Turn: $turn. " +
+                    "Order parameter: $orderParameter." +
+                    "Rest mass fraction mean: $restMassFractionMean. " +
+                    "Speed mean: $speedMean. "
+            )
         }
 
         universe.pureAIStep()

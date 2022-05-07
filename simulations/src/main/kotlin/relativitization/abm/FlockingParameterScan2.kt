@@ -35,11 +35,11 @@ fun main() {
             dfList.add(
                 flockingSingleRun(
                     numPlayer = 50,
-                    nearbyRadius = 3.0,
+                    speedOfLight = speedOfLight,
                     flockSpeed = 0.05,
+                    nearbyRadius = 3.0,
                     maxAnglePerturbation = maxAnglePerturbation,
                     accelerationFuelFraction = 1.0,
-                    speedOfLight = speedOfLight,
                     numStep = 1000,
                     printStep = false,
                 )
