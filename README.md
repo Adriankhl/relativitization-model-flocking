@@ -35,3 +35,9 @@ the simulation on the command line:
 ```
 ./gradlew :simulations:run -PmainClass=relativitization.abm.FlockingKt
 ```
+
+You can use `-PprocessorCount` and `-PramPercentage` to limit cpu usage and ram usage respectively.
+
+```
+./gradlew :simulations:run -PmainClass=relativitization.abm.FlockingKt -PprocessorCount=2 -PramPercentage=25
+```
