@@ -77,6 +77,7 @@ internal fun singleFlockingRun(
             yDim = 10,
             zDim = 10,
             otherDoubleMap = mutableMapOf(
+                "initialFlockSpeed" to flockSpeed,
                 "flockSpeed" to flockSpeed,
                 "nearByRadius" to nearByRadius,
                 "maxAnglePerturbation" to maxAnglePerturbation,

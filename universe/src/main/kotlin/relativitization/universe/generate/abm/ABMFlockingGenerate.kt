@@ -28,10 +28,10 @@ object ABMFlockingGenerate : ABMGenerateUniverseMethod() {
             ABMFlockingAI.name()
         }
 
-        val flockSpeed: Double = settings.universeSettings.otherDoubleMap.getOrElse(
-            "flockSpeed"
+        val initialFlockSpeed: Double = settings.universeSettings.otherDoubleMap.getOrElse(
+            "initialFlockSpeed"
         ) {
-            logger.error("No flockSpeed defined")
+            logger.error("No initialFlockSpeed defined")
             0.5
         }
 
@@ -72,7 +72,7 @@ object ABMFlockingGenerate : ABMGenerateUniverseMethod() {
             val vz = Rand.rand().nextDouble(-1.0, 1.0)
 
             // Constant velocity 0.5
-            mutablePlayerData.velocity = MutableVelocity(vx, vy, vz).scaleVelocity(flockSpeed)
+            mutablePlayerData.velocity = MutableVelocity(vx, vy, vz).scaleVelocity(initialFlockSpeed)
 
             // Choose AI
             mutablePlayerData.playerInternalData.aiName = aiName
