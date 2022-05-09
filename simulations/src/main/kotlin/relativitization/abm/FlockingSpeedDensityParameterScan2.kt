@@ -13,16 +13,16 @@ fun main() {
     // range of speed of light
     val speedOfLightList: List<Double> = DoubleRange.computeList(
         from = 0.1,
-        to = 1.0,
-        step = 0.1,
-        decimalPlace = 1
+        to = 0.5,
+        step = 0.05,
+        decimalPlace = 2
     )
 
     // in radian
     val maxAnglePerturbationList: List<Double> = DoubleRange.computeList(
         from = 0.0,
-        to = 3.0,
-        step = 0.2,
+        to = 2.0,
+        step = 0.4,
         decimalPlace = 1
     )
 
@@ -33,9 +33,9 @@ fun main() {
                 flockingSpeedDensitySingleRun(
                     numPlayer = 50,
                     speedOfLight = speedOfLight,
-                    initialFlockSpeed = 0.1,
-                    minFlockSpeed = 0.1,
-                    maxFlockSpeed = 0.1,
+                    initialFlockSpeed = 0.05,
+                    minFlockSpeed = 0.05,
+                    maxFlockSpeed = 0.05,
                     speedDecayFactor = 0.5,
                     nearbyRadius = 3.0,
                     densityNearbyRadius = 1.0,
@@ -54,5 +54,5 @@ fun main() {
     println(df.describe())
 
     File("data").mkdirs()
-    df.writeCSV("./data/flockingSpeedDensityParameterScan1.csv")
+    df.writeCSV("./data/flockingSpeedDensityParameterScan2.csv")
 }
