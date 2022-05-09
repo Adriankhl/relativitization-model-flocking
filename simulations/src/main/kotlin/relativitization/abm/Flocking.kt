@@ -107,6 +107,7 @@ internal fun flockingSingleRun(
 
         dfList.add(
             dataFrameOf(
+                "randomSeed" to listOf(randomSeed),
                 "turn" to listOf(turn),
                 "speedOfLight" to listOf(speedOfLight),
                 "flockSpeed" to listOf(flockSpeed),

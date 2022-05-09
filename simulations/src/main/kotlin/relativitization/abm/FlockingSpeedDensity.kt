@@ -128,6 +128,7 @@ internal fun flockingSpeedDensitySingleRun(
 
         dfList.add(
             dataFrameOf(
+                "randomSeed" to listOf(randomSeed),
                 "turn" to listOf(turn),
                 "speedOfLight" to listOf(speedOfLight),
                 "minFlockSpeed" to listOf(minFlockSpeed),
