@@ -33,9 +33,9 @@ fun main() {
                 flockingSpeedDensitySingleRun(
                     numPlayer = 50,
                     speedOfLight = speedOfLight,
-                    initialFlockSpeed = speedOfLight * 0.5,
-                    minFlockSpeed = speedOfLight * 0.1,
-                    maxFlockSpeed = speedOfLight * 0.9,
+                    initialFlockSpeed = 0.1,
+                    minFlockSpeed = 0.1,
+                    maxFlockSpeed = 0.1,
                     speedDecayFactor = 0.5,
                     nearbyRadius = 3.0,
                     densityNearbyRadius = 1.0,
