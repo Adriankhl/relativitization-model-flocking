@@ -8,13 +8,15 @@ import relativitization.universe.data.components.MutableABMFlockingData
 import relativitization.universe.data.components.abmFlockingData
 import relativitization.universe.data.global.UniverseGlobalData
 import relativitization.universe.mechanisms.Mechanism
+import kotlin.random.Random
 
 object RestMassReset : Mechanism() {
     override fun process(
         mutablePlayerData: MutablePlayerData,
         universeData3DAtPlayer: UniverseData3DAtPlayer,
         universeSettings: UniverseSettings,
-        universeGlobalData: UniverseGlobalData
+        universeGlobalData: UniverseGlobalData,
+        random: Random,
     ): List<Command> {
 
         val flockingData: MutableABMFlockingData =

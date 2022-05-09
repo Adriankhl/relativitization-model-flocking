@@ -173,7 +173,6 @@ universe/src/main/kotlin/relativitization/universe/ai/defaults/consideration/hie
 universe/src/main/kotlin/relativitization/universe/ai/defaults/consideration/general/BooleanConsideration.kt
 universe/src/main/kotlin/relativitization/universe/ai/defaults/score/MilitaryScore.kt
 universe/src/main/kotlin/relativitization/universe/ai/AI.kt
-universe/src/main/kotlin/relativitization/universe/ai/DefaultSalaryAI.kt
 universe/src/main/kotlin/relativitization/universe/ai/DefaultAI.kt
 universe/src/main/kotlin/relativitization/universe/communication/ServerMessages.kt
 universe/src/main/kotlin/relativitization/universe/communication/ClientMessages.kt
@@ -278,7 +277,6 @@ universe/src/main/kotlin/relativitization/universe/maths/collection/ListFind.kt
 universe/src/main/kotlin/relativitization/universe/maths/collection/Fraction.kt
 universe/src/main/kotlin/relativitization/universe/maths/collection/DoubleRange.kt
 universe/src/main/kotlin/relativitization/universe/maths/number/Notation.kt
-universe/src/main/kotlin/relativitization/universe/maths/random/Rand.kt
 universe/src/main/kotlin/relativitization/universe/mechanisms/defaults/regular/dead/ClearDeadPlayer.kt
 universe/src/main/kotlin/relativitization/universe/mechanisms/defaults/regular/diplomacy/UpdateRelation.kt
 universe/src/main/kotlin/relativitization/universe/mechanisms/defaults/regular/diplomacy/UpdateEnemy.kt
@@ -382,6 +380,7 @@ universe/src/test/kotlin/relativitization/universe/maths/number/NotationTest.kt
 universe/src/test/kotlin/relativitization/universe/generate/science/DefaultGenerateUniverseScienceDataTest.kt
 universe/src/test/kotlin/relativitization/universe/generate/method/testing/TestingFixedMinimalTest.kt
 universe/src/test/kotlin/relativitization/universe/generate/method/random/RandomOneStarPerPlayerGenerateTest.kt
+universe/src/test/kotlin/relativitization/universe/generate/random/RandomOneStarPerPlayerGenerateTest.kt
 universe/src/test/kotlin/relativitization/universe/mechanisms/defaults/dilated/production/FuelFactoryProductionTest.kt
 universe/src/test/kotlin/relativitization/universe/mechanisms/defaults/dilated/research/DiscoverKnowledgeTest.kt
 universe/src/test/kotlin/relativitization/universe/mechanisms/defaults/dilated/combat/AutoCombatTest.kt

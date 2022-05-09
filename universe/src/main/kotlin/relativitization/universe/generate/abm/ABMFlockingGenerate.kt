@@ -9,13 +9,13 @@ import relativitization.universe.data.global.UniverseGlobalData
 import relativitization.universe.data.serializer.DataSerializer
 import relativitization.universe.generate.GenerateSettings
 import relativitization.universe.maths.grid.Grids.create4DGrid
-import relativitization.universe.maths.random.Rand
 import relativitization.universe.utils.RelativitizationLogManager
+import kotlin.random.Random
 
 object ABMFlockingGenerate : ABMGenerateUniverseMethod() {
     private val logger = RelativitizationLogManager.getLogger()
 
-    override fun generate(settings: GenerateSettings): UniverseData {
+    override fun generate(settings: GenerateSettings, random: Random): UniverseData {
         val universeSettings: UniverseSettings = DataSerializer.copy(settings.universeSettings)
 
         val initialRestMass: Double = settings.otherDoubleMap.getOrElse("initialRestMass") {
@@ -63,14 +63,14 @@ object ABMFlockingGenerate : ABMGenerateUniverseMethod() {
 
             mutablePlayerData.playerType = PlayerType.AI
 
-            mutablePlayerData.int4D.x = Rand.rand().nextInt(0, universeSettings.xDim)
-            mutablePlayerData.int4D.y = Rand.rand().nextInt(0, universeSettings.yDim)
-            mutablePlayerData.int4D.z = Rand.rand().nextInt(0, universeSettings.zDim)
+            mutablePlayerData.int4D.x = random.nextInt(0, universeSettings.xDim)
+            mutablePlayerData.int4D.y = random.nextInt(0, universeSettings.yDim)
+            mutablePlayerData.int4D.z = random.nextInt(0, universeSettings.zDim)
 
 
-            val vx = Rand.rand().nextDouble(-1.0, 1.0)
-            val vy = Rand.rand().nextDouble(-1.0, 1.0)
-            val vz = Rand.rand().nextDouble(-1.0, 1.0)
+            val vx = random.nextDouble(-1.0, 1.0)
+            val vy = random.nextDouble(-1.0, 1.0)
+            val vz = random.nextDouble(-1.0, 1.0)
 
             // Constant velocity 0.5
             mutablePlayerData.velocity = MutableVelocity(vx, vy, vz).scaleVelocity(initialFlockSpeed)

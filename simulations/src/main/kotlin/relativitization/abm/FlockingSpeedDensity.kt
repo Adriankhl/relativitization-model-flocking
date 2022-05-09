@@ -20,15 +20,12 @@ import relativitization.universe.generate.name
 import relativitization.universe.global.EmptyGlobalMechanismList
 import relativitization.universe.global.name
 import relativitization.universe.maths.physics.Relativistic
-import relativitization.universe.maths.random.Rand
 import relativitization.universe.mechanisms.ABMFlockingMechanismLists
 import relativitization.universe.mechanisms.name
 import java.io.File
 import kotlin.math.pow
 
 fun main() {
-    Rand.setSeed(100L)
-
     val df = flockingSpeedDensitySingleRun(
         numPlayer = 50,
         speedOfLight = 1.0,
@@ -41,6 +38,7 @@ fun main() {
         maxAnglePerturbation = 0.5,
         accelerationFuelFraction = 1.0,
         numStep = 1000,
+        randomSeed = 100L,
         printStep = true
     )
 
@@ -62,6 +60,7 @@ internal fun flockingSpeedDensitySingleRun(
     maxAnglePerturbation: Double,
     accelerationFuelFraction: Double,
     numStep: Int,
+    randomSeed: Long,
     printStep: Boolean = false,
 ): DataFrame<*> {
     val dfList: MutableList<DataFrame<*>> = mutableListOf()
@@ -87,6 +86,7 @@ internal fun flockingSpeedDensitySingleRun(
             xDim = 10,
             yDim = 10,
             zDim = 10,
+            randomSeed = randomSeed,
             otherDoubleMap = mutableMapOf(
                 "minFlockSpeed" to minFlockSpeed,
                 "maxFlockSpeed" to maxFlockSpeed,

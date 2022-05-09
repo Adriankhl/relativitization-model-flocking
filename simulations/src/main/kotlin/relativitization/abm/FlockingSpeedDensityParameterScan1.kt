@@ -5,12 +5,9 @@ import org.jetbrains.kotlinx.dataframe.api.concat
 import org.jetbrains.kotlinx.dataframe.api.describe
 import org.jetbrains.kotlinx.dataframe.io.writeCSV
 import relativitization.universe.maths.collection.DoubleRange
-import relativitization.universe.maths.random.Rand
 import java.io.File
 
 fun main() {
-    Rand.setSeed(100L)
-
     val dfList: MutableList<DataFrame<*>> = mutableListOf()
 
     // range of speed of light
@@ -45,6 +42,7 @@ fun main() {
                     maxAnglePerturbation = maxAnglePerturbation,
                     accelerationFuelFraction = 1.0,
                     numStep = 1000,
+                    randomSeed = 100L,
                     printStep = false
                 )
             )

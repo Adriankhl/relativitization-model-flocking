@@ -1,18 +1,20 @@
 package relativitization.universe.ai
 
-import relativitization.universe.data.PlayerData
 import relativitization.universe.data.UniverseData3DAtPlayer
 import relativitization.universe.data.commands.ABMFlockingChangeVelocityCommand
 import relativitization.universe.data.commands.Command
 import relativitization.universe.data.components.abmFlockingData
-import relativitization.universe.maths.physics.Intervals
 import relativitization.universe.maths.physics.Velocity
 import relativitization.universe.utils.RelativitizationLogManager
+import kotlin.random.Random
 
 object ABMFlockingSVMAI : AI() {
     private val logger = RelativitizationLogManager.getLogger()
 
-    override fun compute(universeData3DAtPlayer: UniverseData3DAtPlayer): List<Command> {
+    override fun compute(
+        universeData3DAtPlayer: UniverseData3DAtPlayer,
+        random: Random,
+    ): List<Command> {
 
         val flockSpeed: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap
             .getOrElse("flockSpeed") {
@@ -44,7 +46,7 @@ object ABMFlockingSVMAI : AI() {
             }.scaleVelocity(flockSpeed)
 
         // Perturb the velocity by a random angle
-        val targetVelocity: Velocity = averageVelocity.randomRotate(maxAnglePerturbation)
+        val targetVelocity: Velocity = averageVelocity.randomRotate(maxAnglePerturbation, random)
 
         val maxDeltaRestMass: Double = universeData3DAtPlayer.getCurrentPlayerData()
             .playerInternalData.abmFlockingData().restMass * accelerationFuelFraction

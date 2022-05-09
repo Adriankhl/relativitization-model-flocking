@@ -9,12 +9,16 @@ import relativitization.universe.maths.physics.Double3D
 import relativitization.universe.maths.physics.Intervals.distance
 import relativitization.universe.maths.physics.Velocity
 import relativitization.universe.utils.RelativitizationLogManager
+import kotlin.random.Random
 
 object ABMFlockingAI : AI() {
 
     private val logger = RelativitizationLogManager.getLogger()
 
-    override fun compute(universeData3DAtPlayer: UniverseData3DAtPlayer): List<Command> {
+    override fun compute(
+        universeData3DAtPlayer: UniverseData3DAtPlayer,
+        random: Random,
+    ): List<Command> {
         logger.debug("Computing with FlockingAI")
 
         val nearbyRadius: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap
