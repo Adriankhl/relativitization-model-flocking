@@ -373,6 +373,7 @@ universe/src/test/kotlin/relativitization/universe/maths/grid/GridsTest.kt
 universe/src/test/kotlin/relativitization/universe/maths/physics/IntervalsTest.kt
 universe/src/test/kotlin/relativitization/universe/maths/physics/MovementTest.kt
 universe/src/test/kotlin/relativitization/universe/maths/physics/RelativisticTest.kt
+universe/src/test/kotlin/relativitization/universe/maths/physics/VelocityTest.kt
 universe/src/test/kotlin/relativitization/universe/maths/collection/ListFindTest.kt
 universe/src/test/kotlin/relativitization/universe/maths/collection/FractionTest.kt
 universe/src/test/kotlin/relativitization/universe/maths/algebra/PiecewiseTest.kt
