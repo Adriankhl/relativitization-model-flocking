@@ -67,13 +67,16 @@ object ABMFlockingDensitySpeedAI : AI() {
             universeData3DAtPlayer = universeData3DAtPlayer,
         )
 
-        val averageVelocity: Velocity = universeData3DAtPlayer.getPlayerInSphere(nearbyRadius)
+        // sum of direction
+        val directionSum: Velocity = universeData3DAtPlayer.getPlayerInSphere(nearbyRadius)
             .fold(Velocity(0.0, 0.0, 0.0)) { acc, playerData ->
-                acc + playerData.velocity
-            }.scaleVelocity(flockSpeed)
+                acc + playerData.velocity.scaleVelocity(1.0)
+            }
+
+        val scaledVelocity: Velocity = directionSum.scaleVelocity(flockSpeed)
 
         // Perturb the velocity by a random angle
-        val targetVelocity: Velocity = averageVelocity.randomRotate(maxAnglePerturbation, random)
+        val targetVelocity: Velocity = scaledVelocity.randomRotate(maxAnglePerturbation, random)
 
         val maxDeltaRestMass: Double = universeData3DAtPlayer.getCurrentPlayerData()
             .playerInternalData.abmFlockingData().restMass * accelerationFuelFraction
