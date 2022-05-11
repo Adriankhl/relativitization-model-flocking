@@ -13,16 +13,16 @@ fun main() {
     // range of speed of light
     val speedDecayFactorList: List<Double> = DoubleRange.computeList(
         from = 0.0,
-        to = 3.0,
-        step = 0.5,
+        to = 5.0,
+        step = 0.2,
         decimalPlace = 1
     )
 
     // in radian
     val maxAnglePerturbationList: List<Double> = DoubleRange.computeList(
         from = 0.0,
-        to = 2.0,
-        step = 0.4,
+        to = 3.0,
+        step = 0.2,
         decimalPlace = 1
     )
 
