@@ -5,6 +5,7 @@ import org.jetbrains.kotlinx.dataframe.api.concat
 import org.jetbrains.kotlinx.dataframe.api.describe
 import org.jetbrains.kotlinx.dataframe.io.writeCSV
 import relativitization.universe.maths.collection.DoubleRange
+import relativitization.universe.maths.number.Notation
 import java.io.File
 
 fun main() {
@@ -41,7 +42,7 @@ fun main() {
                         numPlayer = 50,
                         speedOfLight = 1.0,
                         initialFlockSpeed = 0.9,
-                        minFlockSpeed = 0.9 - speedRange,
+                        minFlockSpeed = Notation.roundDecimal(0.9 - speedRange, 1),
                         maxFlockSpeed = 0.9,
                         speedDecayFactor = 0.2,
                         nearbyRadius = 3.0,
