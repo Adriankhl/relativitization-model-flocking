@@ -11,7 +11,7 @@ fun main() {
     val dfList: MutableList<DataFrame<*>> = mutableListOf()
 
     // range of speed of light
-    val speedDecayFactorList: List<Double> = DoubleRange.computeList(
+    val densityNearbyRadiusList: List<Double> = DoubleRange.computeList(
         from = 0.0,
         to = 5.0,
         step = 0.2,
@@ -28,11 +28,11 @@ fun main() {
 
     val randomSeedList: List<Long> = (100L..110L).toList()
 
-    for (speedDecayFactor in speedDecayFactorList) {
+    for (densityNearbyRadius in densityNearbyRadiusList) {
         for (maxAnglePerturbation in maxAnglePerturbationList) {
             for (randomSeed in randomSeedList) {
                 println(
-                    "Speed decay: $speedDecayFactor. " +
+                    "Density nearby radius: $densityNearbyRadius. " +
                             "Perturbation angle: $maxAnglePerturbation. " +
                             "Seed: $randomSeed"
                 )
@@ -43,9 +43,9 @@ fun main() {
                         initialFlockSpeed = 0.9,
                         minFlockSpeed = 0.1,
                         maxFlockSpeed = 0.9,
-                        speedDecayFactor = speedDecayFactor,
+                        speedDecayFactor = 0.5,
                         nearbyRadius = 3.0,
-                        densityNearbyRadius = 1.0,
+                        densityNearbyRadius = densityNearbyRadius,
                         maxAnglePerturbation = maxAnglePerturbation,
                         accelerationFuelFraction = 1.0,
                         numStep = 1000,
