@@ -62,5 +62,5 @@ fun main() {
     println(df.describe())
 
     File("data").mkdirs()
-    df.writeCSV("./data/flockingSpeedDensityParameterScan4.csv")
+    df.writeCSV("./data/flockingSpeedDensityParameterScan5Big.csv")
 }
