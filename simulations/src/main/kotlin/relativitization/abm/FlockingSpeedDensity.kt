@@ -134,6 +134,8 @@ internal fun flockingSpeedDensitySingleRun(
                 "minFlockSpeed" to listOf(minFlockSpeed),
                 "maxFlockSpeed" to listOf(maxFlockSpeed),
                 "speedDecayFactor" to listOf(speedDecayFactor),
+                "nearbyRadius" to listOf(nearbyRadius),
+                "densityNearbyRadius" to listOf(densityNearbyRadius),
                 "maxAnglePerturbation" to listOf(maxAnglePerturbation),
                 "accelerationFuelFraction" to listOf(accelerationFuelFraction),
                 "orderParameter" to listOf(orderParameter),
