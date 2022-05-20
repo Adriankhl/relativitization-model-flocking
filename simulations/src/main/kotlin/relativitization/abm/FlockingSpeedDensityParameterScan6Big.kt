@@ -43,8 +43,8 @@ fun main() {
                     println(
                         "Density nearby radius: $densityNearbyRadius. " +
                                 "Perturbation angle: $maxAnglePerturbation. " +
-                                "Speed of light: $speedOfLight" +
-                                "Seed: $randomSeed"
+                                "Speed of light: $speedOfLight. " +
+                                "Seed: $randomSeed. "
                     )
                     dfList.add(
                         flockingSpeedDensitySingleRun(
