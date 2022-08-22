@@ -42,7 +42,7 @@ object ABMFlockingGenerate : ABMGenerateUniverseMethod() {
                 universeSettings.xDim,
                 universeSettings.yDim,
                 universeSettings.zDim
-            ) { _, _, _, _ -> mutableListOf() }
+            ) { _, _, _, _ -> mutableMapOf() }
         )
 
         val universeState = UniverseState(
