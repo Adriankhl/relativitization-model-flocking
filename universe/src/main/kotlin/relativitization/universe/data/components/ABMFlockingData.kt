@@ -21,10 +21,10 @@ data class MutableABMFlockingData(
 
 
 fun PlayerInternalData.abmFlockingData(): ABMFlockingData =
-    playerDataComponentMap.getOrDefault(ABMFlockingData::class, ABMFlockingData())
+    playerDataComponentMap.get()
 
 fun MutablePlayerInternalData.abmFlockingData(): MutableABMFlockingData =
-    playerDataComponentMap.getOrDefault(MutableABMFlockingData::class, MutableABMFlockingData())
+    playerDataComponentMap.get()
 
 fun MutablePlayerInternalData.abmFlockingData(newABMFlockingData: MutableABMFlockingData) =
     playerDataComponentMap.put(newABMFlockingData)
