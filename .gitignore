@@ -248,10 +248,10 @@ universe/src/main/kotlin/relativitization/universe/data/components/DefaultEconom
 universe/src/main/kotlin/relativitization/universe/data/components/DefaultModifierData.kt
 universe/src/main/kotlin/relativitization/universe/data/components/DefaultPhysicsData.kt
 universe/src/main/kotlin/relativitization/universe/data/components/DefaultPlayerDataComponent.kt
-universe/src/main/kotlin/relativitization/universe/data/components/PlayerDataComponent.kt
 universe/src/main/kotlin/relativitization/universe/data/components/DefaultPoliticsData.kt
 universe/src/main/kotlin/relativitization/universe/data/components/DefaultPopSystemData.kt
 universe/src/main/kotlin/relativitization/universe/data/components/DefaultPlayerScienceData.kt
+universe/src/main/kotlin/relativitization/universe/data/components/PlayerDataComponent.kt
 universe/src/main/kotlin/relativitization/universe/data/PlayerData.kt
 universe/src/main/kotlin/relativitization/universe/data/UniverseData.kt
 universe/src/main/kotlin/relativitization/universe/data/UniverseSettings.kt
