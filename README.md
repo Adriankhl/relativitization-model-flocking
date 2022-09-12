@@ -3,7 +3,7 @@
 ## Run the simulation
 
 If you haven't cloned the [Relativitization](https://github.com/Adriankhl/relativitization) repo,
-clone that somewhere out of this directory.
+clone that somewhere out of this directory:
 
 ```
 cd ..
@@ -12,14 +12,14 @@ git clone https://github.com/Adriankhl/relativitization.git
 ```
 
 Run `createModelBase` task in `relativitization` to extract essential files to 
-`relativitization/relativitization-model-base`.
+`relativitization/relativitization-model-base`:
 
 ```
 cd relativitization
 ./gradlew createModelBase
 ```
 
-Copy all essential files from Relativitization.
+Copy all essential files from Relativitization:
 
 ```
 cd ../relativitization-model-flocking
@@ -36,7 +36,7 @@ the simulation on the command line:
 ./gradlew :simulations:run -PmainClass=relativitization.abm.FlockingKt
 ```
 
-You can use `-PprocessorCount` and `-PramPercentage` to limit cpu usage and ram usage respectively.
+You can use `-PprocessorCount` and `-PramPercentage` to limit cpu usage and ram usage respectively:
 
 ```
 ./gradlew :simulations:run -PmainClass=relativitization.abm.FlockingKt -PprocessorCount=2 -PramPercentage=25
