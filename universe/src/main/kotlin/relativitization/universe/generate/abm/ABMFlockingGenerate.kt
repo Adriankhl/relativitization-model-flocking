@@ -1,7 +1,6 @@
 package relativitization.universe.generate.abm
 
 import relativitization.universe.ai.ABMFlockingAI
-import relativitization.universe.ai.name
 import relativitization.universe.data.*
 import relativitization.universe.data.components.MutableABMFlockingData
 import relativitization.universe.maths.physics.MutableVelocity

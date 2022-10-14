@@ -7,21 +7,16 @@ import org.jetbrains.kotlinx.dataframe.api.describe
 import org.jetbrains.kotlinx.dataframe.io.writeCSV
 import relativitization.universe.Universe
 import relativitization.universe.ai.ABMFlockingDensitySpeedAI
-import relativitization.universe.ai.name
 import relativitization.universe.data.MutableUniverseSettings
 import relativitization.universe.data.PlayerData
 import relativitization.universe.data.commands.AllCommandAvailability
-import relativitization.universe.data.commands.name
 import relativitization.universe.data.components.abmFlockingData
 import relativitization.universe.generate.GenerateSettings
 import relativitization.universe.generate.GenerateUniverseMethodCollection
 import relativitization.universe.generate.abm.ABMFlockingGenerate
-import relativitization.universe.generate.name
 import relativitization.universe.global.EmptyGlobalMechanismList
-import relativitization.universe.global.name
 import relativitization.universe.maths.physics.Relativistic
 import relativitization.universe.mechanisms.ABMFlockingMechanismLists
-import relativitization.universe.mechanisms.name
 import java.io.File
 import kotlin.math.pow
 

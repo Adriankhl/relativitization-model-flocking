@@ -12,13 +12,15 @@ import relativitization.universe.maths.physics.Velocity
 @Serializable
 data class ABMFlockingChangeVelocityCommand(
     override val toId: Int,
-    override val fromId: Int,
-    override val fromInt4D: Int4D,
     val targetVelocity: Velocity,
     val maxDeltaRestMass: Double,
 ) : Command() {
-    override fun execute(playerData: MutablePlayerData, universeSettings: UniverseSettings) {
-
+    override fun execute(
+        playerData: MutablePlayerData,
+        fromId: Int,
+        fromInt4D: Int4D,
+        universeSettings: UniverseSettings
+    ) {
         val targetVelocityData: TargetVelocityData = Relativistic.targetVelocityByPhotonRocket(
             initialRestMass = playerData.playerInternalData.abmFlockingData().restMass,
             maxDeltaRestMass = maxDeltaRestMass,

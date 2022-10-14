@@ -394,6 +394,7 @@ universe/src/test/kotlin/relativitization/universe/mechanisms/defaults/dilated/c
 universe/src/test/kotlin/relativitization/universe/mechanisms/defaults/regular/diplomacy/UpdateWarTest.kt
 universe/src/test/kotlin/relativitization/universe/utils/I18NStringTest.kt
 universe/src/test/kotlin/relativitization/universe/ai/DefaultAITest.kt
+universe/src/test/kotlin/relativitization/universe/ai/AITest.kt
 universe/src/test/kotlin/relativitization/universe/UniverseTest.kt
 universe/build.gradle.kts
 simulations/src/main/kotlin/relativitization/game/SmallerTypicalGame.kt

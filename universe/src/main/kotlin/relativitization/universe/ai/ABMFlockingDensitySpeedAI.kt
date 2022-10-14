@@ -83,8 +83,6 @@ object ABMFlockingDensitySpeedAI : AI() {
 
         val abmFlockingChangeVelocityCommand = ABMFlockingChangeVelocityCommand(
             toId = universeData3DAtPlayer.id,
-            fromId = universeData3DAtPlayer.id,
-            fromInt4D = universeData3DAtPlayer.getCurrentPlayerData().int4D,
             targetVelocity = targetVelocity,
             maxDeltaRestMass = maxDeltaRestMass,
         )
