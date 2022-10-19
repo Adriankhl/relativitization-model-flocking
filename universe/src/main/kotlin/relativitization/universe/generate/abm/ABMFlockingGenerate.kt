@@ -77,11 +77,11 @@ object ABMFlockingGenerate : ABMGenerateUniverseMethod() {
             // Choose AI
             mutablePlayerData.playerInternalData.aiName = aiName
 
-            data.addPlayerDataToLatestWithAfterImage(
+            data.addPlayerDataToLatestDuration(
                 mutablePlayerData,
                 universeState.getCurrentTime(),
+                universeSettings.playerAfterImageDuration,
                 universeSettings.groupEdgeLength,
-                universeSettings.playerAfterImageDuration
             )
         }
 
