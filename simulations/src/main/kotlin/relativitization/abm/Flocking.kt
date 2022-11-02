@@ -1,7 +1,8 @@
 package relativitization.abm
 
 import org.jetbrains.kotlinx.dataframe.DataFrame
-import org.jetbrains.kotlinx.dataframe.api.*
+import org.jetbrains.kotlinx.dataframe.api.describe
+import org.jetbrains.kotlinx.dataframe.api.toDataFrame
 import org.jetbrains.kotlinx.dataframe.io.writeCSV
 import relativitization.universe.Universe
 import relativitization.universe.ai.ABMFlockingSVMAI
@@ -48,7 +49,8 @@ internal fun flockingSingleRun(
     randomSeed: Long,
     printStep: Boolean = false,
 ): DataFrame<*> {
-    val dfList: MutableList<DataFrame<*>> = mutableListOf()
+    // This map will be converted to dataframe
+    val dfMap: MutableMap<String, MutableList<Any>> = mutableMapOf()
 
     val generateSetting = GenerateSettings(
         generateMethod = ABMFlockingGenerate.name(),
@@ -100,30 +102,36 @@ internal fun flockingSingleRun(
 
         val dilatedTimeMean: Double = dilatedTimeList.sum() / dilatedTimeList.size
 
-        dfList.add(
-            dataFrameOf(
-                "randomSeed" to listOf(randomSeed),
-                "turn" to listOf(turn),
-                "speedOfLight" to listOf(speedOfLight),
-                "flockSpeed" to listOf(flockSpeed),
-                "maxAnglePerturbation" to listOf(maxAnglePerturbation),
-                "accelerationFuelFraction" to listOf(accelerationFuelFraction),
-                "orderParameter" to listOf(orderParameter),
-                "restMassFractionMean" to listOf(restMassFractionMean),
-                "dilatedTimeMean" to listOf(dilatedTimeMean),
-            )
+        val outputDataMap = mapOf(
+            "randomSeed" to randomSeed,
+            "turn" to turn,
+            "speedOfLight" to speedOfLight,
+            "flockSpeed" to flockSpeed,
+            "maxAnglePerturbation" to maxAnglePerturbation,
+            "accelerationFuelFraction" to accelerationFuelFraction,
+            "orderParameter" to orderParameter,
+            "restMassFractionMean" to restMassFractionMean,
+            "dilatedTimeMean" to dilatedTimeMean,
         )
 
+        outputDataMap.forEach {
+            dfMap.getOrPut(it.key) {
+                mutableListOf()
+            }.add(it.value)
+        }
+
         if (printStep) {
-            println("Turn: $turn. " +
-                    "Order parameter: $orderParameter." +
-                    "Rest mass fraction mean: $restMassFractionMean. ")
+            println(
+                "Turn: $turn. " +
+                        "Order parameter: $orderParameter." +
+                        "Rest mass fraction mean: $restMassFractionMean. "
+            )
         }
 
         universe.pureAIStep()
     }
 
-    return dfList.concat()
+    return dfMap.toDataFrame()
 }
 
 internal fun computeOrderParameter(
