@@ -16,29 +16,27 @@ object ABMFlockingSVMAI : AI() {
         random: Random,
     ): List<Command> {
 
-        val flockSpeed: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap
-            .getOrElse("flockSpeed") {
-                logger.error("No flockSpeed defined")
-                0.5
-            }
+        val flockSpeed: Double = universeData3DAtPlayer.universeSettings.getOtherDoubleOrDefault(
+            "flockSpeed",
+            0.5
+        )
 
-        val nearbyRadius: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap
-            .getOrElse("nearbyRadius") {
-                logger.error("No nearbyRadius defined")
-                3.0
-            }
+        val nearbyRadius: Double = universeData3DAtPlayer.universeSettings.getOtherDoubleOrDefault(
+            "nearbyRadius",
+            3.0
+        )
 
-        val maxAnglePerturbation: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap
-            .getOrElse("maxAnglePerturbation") {
-                logger.error("No maxAnglePerturbation defined")
+        val maxAnglePerturbation: Double = universeData3DAtPlayer.universeSettings
+            .getOtherDoubleOrDefault(
+                "maxAnglePerturbation",
                 0.1
-            }
+            )
 
         val accelerationFuelFraction: Double = universeData3DAtPlayer.universeSettings
-            .otherDoubleMap.getOrElse("accelerationFuelFraction") {
-                logger.error("No accelerationFuelFraction defined")
+            .getOtherDoubleOrDefault(
+                "accelerationFuelFraction",
                 1.0
-            }
+            )
 
         val averageVelocity: Velocity = universeData3DAtPlayer.getPlayerInSphere(nearbyRadius)
             .fold(Velocity(0.0, 0.0, 0.0)) { acc, playerData ->

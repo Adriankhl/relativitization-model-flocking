@@ -17,23 +17,20 @@ object ABMFlockingGenerate : ABMGenerateUniverseMethod() {
     override fun generate(settings: GenerateSettings, random: Random): UniverseData {
         val universeSettings: UniverseSettings = DataSerializer.copy(settings.universeSettings)
 
-        val initialRestMass: Double = settings.otherDoubleMap.getOrElse("initialRestMass") {
-            logger.error("No initialRestMass defined")
+        val initialRestMass: Double = settings.getOtherDoubleOrDefault(
+            "initialRestMass",
             1.0
-        }
+        )
 
-        val initialFlockSpeed: Double = settings.otherDoubleMap.getOrElse(
-            "initialFlockSpeed"
-        ) {
-            logger.error("No initialFlockSpeed defined")
+        val initialFlockSpeed: Double = settings.getOtherDoubleOrDefault(
+            "initialFlockSpeed",
             0.5
-        }
+        )
 
-        val aiName: String = settings.otherStringMap.getOrElse("aiName") {
-            logger.error("No aiName defined")
+        val aiName: String = settings.getOtherStringOrDefault(
+            "aiName",
             ABMFlockingAI.name()
-        }
-
+        )
 
         val data = MutableUniverseData4D(
             create4DGrid(
@@ -72,7 +69,8 @@ object ABMFlockingGenerate : ABMGenerateUniverseMethod() {
             val vz = random.nextDouble(-1.0, 1.0)
 
             // Constant velocity 0.5
-            mutablePlayerData.velocity = MutableVelocity(vx, vy, vz).scaleVelocity(initialFlockSpeed)
+            mutablePlayerData.velocity =
+                MutableVelocity(vx, vy, vz).scaleVelocity(initialFlockSpeed)
 
             // Choose AI
             mutablePlayerData.playerInternalData.aiName = aiName

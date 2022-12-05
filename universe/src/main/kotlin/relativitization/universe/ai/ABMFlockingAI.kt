@@ -21,21 +21,21 @@ object ABMFlockingAI : AI() {
     ): List<Command> {
         logger.debug("Computing with FlockingAI")
 
-        val nearbyRadius: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap
-            .getOrElse("nearbyRadius") {
-                logger.error("No nearbyRadius defined")
-                2.0
-            }
-        val desiredSeparation: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap
-            .getOrElse("desiredSeparation") {
-                logger.error("No desiredSeparation defined")
+        val nearbyRadius: Double = universeData3DAtPlayer.universeSettings.getOtherDoubleOrDefault(
+            "nearbyRadius",
+            2.0
+        )
+
+        val desiredSeparation: Double = universeData3DAtPlayer.universeSettings
+            .getOtherDoubleOrDefault(
+                "desiredSeparation",
                 0.5
-            }
-        val flockSpeed: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap
-            .getOrElse("flockSpeed") {
-                logger.error("No flockSpeed defined")
-                0.5
-            }
+            )
+
+        val flockSpeed: Double = universeData3DAtPlayer.universeSettings.getOtherDoubleOrDefault(
+            "flockSpeed",
+            0.5
+        )
 
         val cohesionDouble3D = cohesion(universeData3DAtPlayer, nearbyRadius)
 
@@ -189,9 +189,11 @@ object ABMFlockingAI : AI() {
             selfDouble4D.x < 0.1 -> {
                 1.0
             }
+
             universeData3DAtPlayer.universeSettings.xDim.toDouble() - selfDouble4D.x < 0.1 -> {
                 -1.0
             }
+
             else -> {
                 0.0
             }
@@ -201,9 +203,11 @@ object ABMFlockingAI : AI() {
             selfDouble4D.y < 0.1 -> {
                 1.0
             }
+
             universeData3DAtPlayer.universeSettings.yDim.toDouble() - selfDouble4D.y < 0.1 -> {
                 -1.0
             }
+
             else -> {
                 0.0
             }
@@ -214,9 +218,11 @@ object ABMFlockingAI : AI() {
             selfDouble4D.z < 0.1 -> {
                 1.0
             }
+
             universeData3DAtPlayer.universeSettings.zDim.toDouble() - selfDouble4D.z < 0.1 -> {
                 -1.0
             }
+
             else -> {
                 0.0
             }

@@ -17,35 +17,32 @@ object ABMFlockingDensitySpeedAI : AI() {
         random: Random,
     ): List<Command> {
 
-        val minFlockSpeed: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap
-            .getOrElse("minFlockSpeed") {
-                logger.error("No minFlockSpeed defined")
+        val minFlockSpeed: Double = universeData3DAtPlayer.universeSettings.getOtherDoubleOrDefault(
+            "minFlockSpeed",
+            0.1
+        )
+
+        val maxFlockSpeed: Double = universeData3DAtPlayer.universeSettings.getOtherDoubleOrDefault(
+            "maxFlockSpeed",
+            0.9
+        )
+
+        val speedDecayFactor: Double = universeData3DAtPlayer.universeSettings
+            .getOtherDoubleOrDefault(
+                "speedDecayFactor",
                 0.1
-            }
+            )
 
-        val maxFlockSpeed: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap
-            .getOrElse("maxFlockSpeed") {
-                logger.error("No maxFlockSpeed defined")
-                0.9
-            }
+        val nearbyRadius: Double = universeData3DAtPlayer.universeSettings.getOtherDoubleOrDefault(
+            "nearbyRadius",
+            3.0
+        )
 
-        val speedDecayFactor: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap
-            .getOrElse("speedDecayFactor") {
-                logger.error("No speedDecayFactor defined")
-                0.1
-            }
-
-        val nearbyRadius: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap
-            .getOrElse("nearbyRadius") {
-                logger.error("No nearbyRadius defined")
+        val densityNearbyRadius: Double = universeData3DAtPlayer.universeSettings
+            .getOtherDoubleOrDefault(
+                "densityNearbyRadius",
                 3.0
-            }
-
-        val densityNearbyRadius: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap
-            .getOrElse("densityNearbyRadius") {
-                logger.error("No densityNearbyRadius defined")
-                3.0
-            }
+            )
 
         val maxAnglePerturbation: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap
             .getOrElse("maxAnglePerturbation") {
@@ -54,10 +51,10 @@ object ABMFlockingDensitySpeedAI : AI() {
             }
 
         val accelerationFuelFraction: Double = universeData3DAtPlayer.universeSettings
-            .otherDoubleMap.getOrElse("accelerationFuelFraction") {
-                logger.error("No accelerationFuelFraction defined")
+            .getOtherDoubleOrDefault(
+                "accelerationFuelFraction",
                 1.0
-            }
+            )
 
         val flockSpeed: Double = computeFlockSpeed(
             minFlockSpeed = minFlockSpeed,
