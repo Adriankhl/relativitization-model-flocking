@@ -14,20 +14,25 @@ import kotlin.random.Random
 object ABMFlockingGenerate : ABMGenerateUniverseMethod() {
     private val logger = RelativitizationLogManager.getLogger()
 
-    override fun generate(settings: GenerateSettings, random: Random): UniverseData {
-        val universeSettings: UniverseSettings = DataSerializer.copy(settings.universeSettings)
+    override fun generate(
+        generateSettings: GenerateSettings,
+        random: Random
+    ): UniverseData {
+        val universeSettings: UniverseSettings = DataSerializer.copy(
+            generateSettings.universeSettings
+        )
 
-        val initialRestMass: Double = settings.getOtherDoubleOrDefault(
+        val initialRestMass: Double = generateSettings.getOtherDoubleOrDefault(
             "initialRestMass",
             1.0
         )
 
-        val initialFlockSpeed: Double = settings.getOtherDoubleOrDefault(
+        val initialFlockSpeed: Double = generateSettings.getOtherDoubleOrDefault(
             "initialFlockSpeed",
             0.5
         )
 
-        val aiName: String = settings.getOtherStringOrDefault(
+        val aiName: String = generateSettings.getOtherStringOrDefault(
             "aiName",
             ABMFlockingAI.name()
         )
@@ -46,7 +51,7 @@ object ABMFlockingGenerate : ABMGenerateUniverseMethod() {
             maxPlayerId = 0,
         )
 
-        for (i in 1..settings.numPlayer) {
+        for (i in 1..generateSettings.numPlayer) {
             val playerId: Int = universeState.getNewPlayerId()
 
             val mutablePlayerData = MutablePlayerData(playerId)
