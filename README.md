@@ -31,7 +31,8 @@ hidden file, run `cp -r ../relativitization/relativitization-model-base/* .` ins
 
 Now you can open this project with your favourite IDE, or you can run simulations directly on
 your terminal. This command run the main function in 
-`./simulations/src/main/kotlin/relativitization/abm/Flocking.kt`:
+`./simulations/src/main/kotlin/relativitization/abm/Flocking.kt` 
+to produce the simulation result at `simulations/data/Flocking.csv`:
 
 ```
 ./gradlew :simulations:run -PmainClass=relativitization.abm.FlockingKt
@@ -40,5 +41,5 @@ your terminal. This command run the main function in
 You can use `-PprocessorCount` and `-PramPercentage` to limit cpu usage and ram usage respectively:
 
 ```
-./gradlew :simulations:run -PmainClass=relativitization.abm.KDScan1Kt -PprocessorCount=2 -PramPercentage=25
+./gradlew :simulations:run -PmainClass=relativitization.abm.FlockingKt -PprocessorCount=2 -PramPercentage=25
 ```
