@@ -1,9 +1,11 @@
 package relativitization.flocking
 
+import ksergen.serializers.module.GeneratedModule
 import org.jetbrains.kotlinx.dataframe.DataFrame
 import org.jetbrains.kotlinx.dataframe.api.describe
 import org.jetbrains.kotlinx.dataframe.api.toDataFrame
 import org.jetbrains.kotlinx.dataframe.io.writeCSV
+import relativitization.universe.core.RelativitizationInitializer
 import relativitization.universe.flocking.ai.ABMFlockingSVMAI
 import relativitization.universe.core.Universe
 import relativitization.universe.core.data.MutableUniverseSettings
@@ -14,12 +16,15 @@ import relativitization.universe.core.generate.GenerateUniverseMethodCollection
 import relativitization.universe.core.global.EmptyGlobalMechanismList
 import relativitization.universe.core.maths.physics.Relativistic
 import relativitization.universe.core.maths.physics.Velocity
+import relativitization.universe.flocking.FlockingInitializer
 import relativitization.universe.flocking.data.components.abmFlockingData
 import relativitization.universe.flocking.generate.ABMFlockingGenerate
 import relativitization.universe.flocking.mechanisms.ABMFlockingMechanismLists
 import java.io.File
 
 fun main() {
+    FlockingInitializer.initialize()
+
     val df = flockingSingleRun(
         numPlayer = 50,
         speedOfLight = 1.0,
