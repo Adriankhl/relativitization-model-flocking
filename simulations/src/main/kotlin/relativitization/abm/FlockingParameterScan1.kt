@@ -4,7 +4,7 @@ import org.jetbrains.kotlinx.dataframe.DataFrame
 import org.jetbrains.kotlinx.dataframe.api.concat
 import org.jetbrains.kotlinx.dataframe.api.describe
 import org.jetbrains.kotlinx.dataframe.io.writeCSV
-import relativitization.universe.maths.collection.DoubleRange
+import relativitization.universe.core.maths.collection.DoubleRange
 import java.io.File
 
 fun main() {

@@ -1,11 +1,12 @@
 package relativitization.universe.ai
 
-import relativitization.universe.data.UniverseData3DAtPlayer
+import relativitization.universe.core.ai.AI
+import relativitization.universe.core.data.UniverseData3DAtPlayer
+import relativitization.universe.core.data.commands.Command
+import relativitization.universe.core.maths.physics.Velocity
+import relativitization.universe.core.utils.RelativitizationLogManager
 import relativitization.universe.data.commands.ABMFlockingChangeVelocityCommand
-import relativitization.universe.data.commands.Command
 import relativitization.universe.data.components.abmFlockingData
-import relativitization.universe.maths.physics.Velocity
-import relativitization.universe.utils.RelativitizationLogManager
 import kotlin.math.exp
 import kotlin.random.Random
 

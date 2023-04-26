@@ -1,17 +1,23 @@
 package relativitization.universe.generate.abm
 
 import relativitization.universe.ai.ABMFlockingAI
-import relativitization.universe.data.*
+import relativitization.universe.core.data.MutablePlayerData
+import relativitization.universe.core.data.MutableUniverseData4D
+import relativitization.universe.core.data.PlayerType
+import relativitization.universe.core.data.UniverseData
+import relativitization.universe.core.data.UniverseSettings
+import relativitization.universe.core.data.UniverseState
+import relativitization.universe.core.data.global.MutableUniverseGlobalData
+import relativitization.universe.core.data.serializer.DataSerializer
+import relativitization.universe.core.generate.GenerateSettings
+import relativitization.universe.core.generate.GenerateUniverseMethod
+import relativitization.universe.core.maths.grid.Grids.create4DGrid
+import relativitization.universe.core.maths.physics.MutableVelocity
+import relativitization.universe.core.utils.RelativitizationLogManager
 import relativitization.universe.data.components.MutableABMFlockingData
-import relativitization.universe.maths.physics.MutableVelocity
-import relativitization.universe.data.global.UniverseGlobalData
-import relativitization.universe.data.serializer.DataSerializer
-import relativitization.universe.generate.GenerateSettings
-import relativitization.universe.maths.grid.Grids.create4DGrid
-import relativitization.universe.utils.RelativitizationLogManager
 import kotlin.random.Random
 
-object ABMFlockingGenerate : ABMGenerateUniverseMethod() {
+object ABMFlockingGenerate : GenerateUniverseMethod() {
     private val logger = RelativitizationLogManager.getLogger()
 
     override fun generate(
@@ -93,7 +99,7 @@ object ABMFlockingGenerate : ABMGenerateUniverseMethod() {
             universeSettings = universeSettings,
             universeState = universeState,
             commandMap = mutableMapOf(),
-            universeGlobalData = UniverseGlobalData()
+            universeGlobalData = DataSerializer.copy(MutableUniverseGlobalData())
         )
     }
 }

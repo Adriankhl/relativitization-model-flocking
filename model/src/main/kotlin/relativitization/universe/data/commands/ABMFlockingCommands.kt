@@ -1,13 +1,14 @@
 package relativitization.universe.data.commands
 
 import kotlinx.serialization.Serializable
-import relativitization.universe.data.MutablePlayerData
-import relativitization.universe.data.UniverseSettings
+import relativitization.universe.core.data.MutablePlayerData
+import relativitization.universe.core.data.UniverseSettings
+import relativitization.universe.core.data.commands.Command
+import relativitization.universe.core.maths.physics.Int4D
+import relativitization.universe.core.maths.physics.Relativistic
+import relativitization.universe.core.maths.physics.TargetVelocityData
+import relativitization.universe.core.maths.physics.Velocity
 import relativitization.universe.data.components.abmFlockingData
-import relativitization.universe.maths.physics.Int4D
-import relativitization.universe.maths.physics.Relativistic
-import relativitization.universe.maths.physics.TargetVelocityData
-import relativitization.universe.maths.physics.Velocity
 
 @Serializable
 data class ABMFlockingChangeVelocityCommand(
