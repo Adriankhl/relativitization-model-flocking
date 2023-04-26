@@ -22,6 +22,7 @@ ksergenVersion = "0.1"
 kotlinxSerializationVersion = "1.5.0"
 
 # JVM
+relativitizationVersion = "0.2.4"
 log4jVersion = "2.20.0"
 dataframeVersion = "0.10.0"
 
@@ -34,6 +35,7 @@ ksergen-ksp = { module = "com.github.adriankhl.ksergen:ksergen-ksp", version.ref
 log4j-api = { module = "org.apache.logging.log4j:log4j-api", version.ref = "log4jVersion" }
 log4j-core = { module = "org.apache.logging.log4j:log4j-core", version.ref = "log4jVersion" }
 log4j-slf4j2-impl = { module = "org.apache.logging.log4j:log4j-slf4j2-impl", version.ref = "log4jVersion" }
+relativitization-core = { module = "com.github.adriankhl.relativitization:relativitization-core", version.ref = "relativitizationVersion" }
 
 [plugins]
 ben-manes-versions = { id = "com.github.ben-manes.versions", version.ref = "gradleVersionPluginVersion" }
