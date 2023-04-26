@@ -1,11 +1,9 @@
 package relativitization.flocking
 
-import ksergen.serializers.module.GeneratedModule
 import org.jetbrains.kotlinx.dataframe.DataFrame
 import org.jetbrains.kotlinx.dataframe.api.describe
 import org.jetbrains.kotlinx.dataframe.api.toDataFrame
 import org.jetbrains.kotlinx.dataframe.io.writeCSV
-import relativitization.universe.core.RelativitizationInitializer
 import relativitization.universe.flocking.ai.ABMFlockingSVMAI
 import relativitization.universe.core.Universe
 import relativitization.universe.core.data.MutableUniverseSettings
