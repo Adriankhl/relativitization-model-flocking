@@ -1,8 +1,8 @@
 rootProject.name = "relativitization-model-flocking"
 
 include(
-    "simulations",
     "model",
+    "simulations",
 )
 
 pluginManagement {
