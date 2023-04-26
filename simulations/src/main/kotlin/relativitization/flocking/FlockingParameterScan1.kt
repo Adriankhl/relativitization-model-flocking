@@ -5,9 +5,11 @@ import org.jetbrains.kotlinx.dataframe.api.concat
 import org.jetbrains.kotlinx.dataframe.api.describe
 import org.jetbrains.kotlinx.dataframe.io.writeCSV
 import relativitization.universe.core.maths.collection.DoubleRange
+import relativitization.universe.flocking.FlockingInitializer
 import java.io.File
 
 fun main() {
+    FlockingInitializer.initialize()
 
     val dfList: MutableList<DataFrame<*>> = mutableListOf()
 

@@ -14,6 +14,7 @@ import relativitization.universe.core.generate.GenerateSettings
 import relativitization.universe.core.generate.GenerateUniverseMethodCollection
 import relativitization.universe.core.global.EmptyGlobalMechanismList
 import relativitization.universe.core.maths.physics.Relativistic
+import relativitization.universe.flocking.FlockingInitializer
 import relativitization.universe.flocking.data.components.abmFlockingData
 import relativitization.universe.flocking.generate.ABMFlockingGenerate
 import relativitization.universe.flocking.mechanisms.ABMFlockingMechanismLists
@@ -21,6 +22,8 @@ import java.io.File
 import kotlin.math.pow
 
 fun main() {
+    FlockingInitializer.initialize()
+
     val df = flockingSpeedDensitySingleRun(
         numPlayer = 50,
         speedOfLight = 1.0,
