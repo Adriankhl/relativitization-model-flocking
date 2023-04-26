@@ -35,11 +35,11 @@ your terminal. This command run the main function in
 to produce the simulation result at `simulations/data/Flocking.csv`:
 
 ```
-./gradlew :simulations:run -PmainClass=relativitization.abm.FlockingKt
+./gradlew :simulations:run -PmainClass=relativitization.flocking.FlockingKt
 ```
 
 You can use `-PprocessorCount` and `-PramPercentage` to limit cpu usage and ram usage respectively:
 
 ```
-./gradlew :simulations:run -PmainClass=relativitization.abm.FlockingKt -PprocessorCount=2 -PramPercentage=25
+./gradlew :simulations:run -PmainClass=relativitization.flocking.FlockingKt -PprocessorCount=2 -PramPercentage=25
 ```
