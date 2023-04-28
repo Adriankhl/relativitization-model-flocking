@@ -1,6 +1,6 @@
 package relativitization.universe.flocking
 
-import ksergen.serializers.module.GeneratedModule
+import ksergen.GeneratedModule
 import relativitization.universe.core.RelativitizationInitializer
 import relativitization.universe.flocking.ai.ABMFlockingAI
 import relativitization.universe.flocking.ai.ABMFlockingDensitySpeedAI
