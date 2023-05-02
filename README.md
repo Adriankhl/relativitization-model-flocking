@@ -1,4 +1,4 @@
-# Flocking model example
+# Interstellar flocking model
 
 ## Run the simulation
 
