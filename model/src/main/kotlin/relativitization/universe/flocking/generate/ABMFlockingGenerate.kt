@@ -1,6 +1,6 @@
 package relativitization.universe.flocking.generate
 
-import relativitization.universe.flocking.ai.ABMFlockingAI
+import relativitization.universe.core.ai.EmptyAI
 import relativitization.universe.core.data.MutablePlayerData
 import relativitization.universe.core.data.MutableUniverseData4D
 import relativitization.universe.core.data.PlayerType
@@ -36,11 +36,6 @@ object ABMFlockingGenerate : GenerateUniverseMethod() {
         val initialFlockSpeed: Double = generateSettings.getOtherDoubleOrDefault(
             "initialFlockSpeed",
             0.5
-        )
-
-        val aiName: String = generateSettings.getOtherStringOrDefault(
-            "aiName",
-            ABMFlockingAI.name()
         )
 
         val data = MutableUniverseData4D(
@@ -84,7 +79,12 @@ object ABMFlockingGenerate : GenerateUniverseMethod() {
                 MutableVelocity(vx, vy, vz).scaleVelocity(initialFlockSpeed)
 
             // Choose AI
-            mutablePlayerData.playerInternalData.aiName = aiName
+            if (generateSettings.otherStringMap.containsKey("aiName")) {
+                mutablePlayerData.playerInternalData.aiName = generateSettings.getOtherStringOrDefault(
+                    "aiName",
+                    EmptyAI.name(),
+                )
+            }
 
             data.addPlayerDataToLatestDuration(
                 mutablePlayerData = mutablePlayerData,

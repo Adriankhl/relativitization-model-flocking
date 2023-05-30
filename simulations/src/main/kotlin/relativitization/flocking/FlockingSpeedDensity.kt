@@ -18,6 +18,7 @@ import relativitization.universe.flocking.FlockingInitializer
 import relativitization.universe.flocking.data.components.abmFlockingData
 import relativitization.universe.flocking.generate.ABMFlockingGenerate
 import relativitization.universe.flocking.mechanisms.ABMFlockingMechanismLists
+import relativitization.universe.flocking.mechanisms.DensitySpeedMechanismLists
 import java.io.File
 import kotlin.math.pow
 
@@ -72,13 +73,10 @@ internal fun flockingSpeedDensitySingleRun(
             "initialRestMass" to 1.0,
             "initialFlockSpeed" to initialFlockSpeed,
         ),
-        otherStringMap = mutableMapOf(
-            "aiName" to ABMFlockingDensitySpeedAI.name(),
-        ),
+        otherStringMap = mutableMapOf(),
         universeSettings = MutableUniverseSettings(
             universeName = "Flocking",
-            commandCollectionName = AllCommandAvailability.name(),
-            mechanismCollectionName = ABMFlockingMechanismLists.name(),
+            mechanismCollectionName = DensitySpeedMechanismLists.name(),
             globalMechanismCollectionName = EmptyGlobalMechanismList.name(),
             speedOfLight = speedOfLight,
             xDim = 10,
