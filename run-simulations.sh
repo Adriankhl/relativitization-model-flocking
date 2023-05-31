@@ -4,6 +4,7 @@ fileList=(
   "FlockingSpeedDensityParameterScan1.kt"
   "FlockingSpeedDensityParameterScan1Big.kt"
   "FlockingSpeedDensityParameterScan2.kt"
+  "FlockingSpeedDensityParameterScan2Big.kt"
   "FlockingSpeedDensityParameterScan3.kt"
   "FlockingSpeedDensityParameterScan3Big.kt"
   "FlockingSpeedDensityParameterScan4.kt"
