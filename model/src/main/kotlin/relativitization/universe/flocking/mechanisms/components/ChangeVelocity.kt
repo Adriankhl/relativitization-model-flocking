@@ -23,40 +23,40 @@ object ChangeVelocity : Mechanism() {
         universeGlobalData: UniverseGlobalData,
         random: Random
     ): List<Command> {
-        val minFlockSpeed: Double = universeData3DAtPlayer.universeSettings.getOtherDoubleOrDefault(
+        val minFlockSpeed: Double = universeSettings.getOtherDoubleOrDefault(
             "minFlockSpeed",
             0.1
         )
 
-        val maxFlockSpeed: Double = universeData3DAtPlayer.universeSettings.getOtherDoubleOrDefault(
+        val maxFlockSpeed: Double = universeSettings.getOtherDoubleOrDefault(
             "maxFlockSpeed",
             0.9
         )
 
-        val speedDecayFactor: Double = universeData3DAtPlayer.universeSettings
+        val speedDecayFactor: Double = universeSettings
             .getOtherDoubleOrDefault(
                 "speedDecayFactor",
                 0.1
             )
 
-        val nearbyRadius: Double = universeData3DAtPlayer.universeSettings.getOtherDoubleOrDefault(
+        val nearbyRadius: Double = universeSettings.getOtherDoubleOrDefault(
             "nearbyRadius",
             3.0
         )
 
-        val densityNearbyRadius: Double = universeData3DAtPlayer.universeSettings
+        val densityNearbyRadius: Double = universeSettings
             .getOtherDoubleOrDefault(
                 "densityNearbyRadius",
                 3.0
             )
 
-        val maxAnglePerturbation: Double = universeData3DAtPlayer.universeSettings
+        val maxAnglePerturbation: Double = universeSettings
             .getOtherDoubleOrDefault(
                 "maxAnglePerturbation",
                 0.1
             )
 
-        val accelerationFuelFraction: Double = universeData3DAtPlayer.universeSettings
+        val accelerationFuelFraction: Double = universeSettings
             .getOtherDoubleOrDefault(
                 "accelerationFuelFraction",
                 1.0
