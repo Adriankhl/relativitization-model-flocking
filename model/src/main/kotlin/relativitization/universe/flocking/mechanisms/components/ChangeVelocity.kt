@@ -50,11 +50,11 @@ object ChangeVelocity : Mechanism() {
                 3.0
             )
 
-        val maxAnglePerturbation: Double = universeData3DAtPlayer.universeSettings.otherDoubleMap
-            .getOrElse("maxAnglePerturbation") {
-                logger.error("No maxAnglePerturbation defined")
+        val maxAnglePerturbation: Double = universeData3DAtPlayer.universeSettings
+            .getOtherDoubleOrDefault(
+                "maxAnglePerturbation",
                 0.1
-            }
+            )
 
         val accelerationFuelFraction: Double = universeData3DAtPlayer.universeSettings
             .getOtherDoubleOrDefault(
