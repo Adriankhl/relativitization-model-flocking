@@ -18,8 +18,6 @@ import relativitization.universe.flocking.data.components.MutableABMFlockingData
 import kotlin.random.Random
 
 object ABMFlockingGenerate : GenerateUniverseMethod() {
-    private val logger = RelativitizationLogManager.getLogger()
-
     override fun generate(
         generateSettings: GenerateSettings,
         random: Random
