@@ -14,8 +14,6 @@ import kotlin.math.exp
 import kotlin.random.Random
 
 object ChangeVelocity : Mechanism() {
-    private val logger = RelativitizationLogManager.getLogger()
-
     override fun process(
         mutablePlayerData: MutablePlayerData,
         universeData3DAtPlayer: UniverseData3DAtPlayer,
